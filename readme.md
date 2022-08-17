@@ -2,23 +2,15 @@
 A simplistic wrapper for raylib in Julia!
 - Works on Windows!
 - (Nearly) 100% function coverage.
-- Singular File
+- Auto Install
 ## Installation
-Clone this repo and raylib with Git.
-### Compile Raylib for dynamic usage
-Go into the raylib/ folder
-Edit the [Makefile](https://github.com/raysan5/raylib/blob/master/src/Makefile) where to say
-```makefile
-RAYLIB_LIBTYPE ?= SHARED
-```
-then run
-```sh
-$ make
-```
-If you're on Windows this will produce a .dll file,
-If you're on Linux (and probably MacOS) this will produce a .so file
+Clone this repo with `git clone https://github.com/irishgreencitrus/raylib.jl`.
+Run the `setup.jl` file.
+This will download and install raylib.jl in the correct way
+(I have currently only implemented this on Linux and plan to implement it correctly on Windows)
+If you use MacOS, open an issue!
 ### Finishing Up. 
-Now, copy your resulting file (either raylib.dll or raylib.so) into the root of this repository (the raylib.jl folder).
-You are done!
-Now run any of the examples and they should work, (if not please add an error)
+If you are on Linux the dynamic lib should automatically move the shared lib to the correct location,
+otherwise you may need to copy either `raylib.dll` or `libraylib.dylib` to the root of this directory.
 
+If all goes well, run an example and a window should pop up!

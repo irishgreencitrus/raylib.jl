@@ -3,12 +3,16 @@ const directory_location = @__DIR__
 ## RAYLIB CONSTANTS
 ## EDIT THIS PATH
 if isfile(directory_location * "/raylib.dll")
-const raylib_lib_path = directory_location * "/raylib.dll"
+    const raylib_lib_path = directory_location * "/raylib.dll"
+elseif isfile(directory_location * "/raylib.dylib")
+    const raylib_lib_path = directory_location * "/libraylib.dylib"
 else
-const raylib_lib_path = directory_location * "/raylib.so"
+    const raylib_lib_path = directory_location * "/libraylib.so"
 end
 ##
-const raylib_version = 4.0
+
+# start enums
+# ConfigFlags
 const flag_vsync_hint = 64
 const flag_fullscreen_mode = 2
 const flag_window_resizable = 4
@@ -21,8 +25,10 @@ const flag_window_topmost = 4096
 const flag_window_always_run = 256
 const flag_window_transparent = 16
 const flag_window_highdpi = 8192
+const flag_window_mouse_passthrough = 16384
 const flag_msaa_4x_hint = 32
 const flag_interlaced_hint = 65536
+# TraceLogLevel
 const log_all = 0
 const log_trace = 1
 const log_debug = 2
@@ -31,6 +37,7 @@ const log_warning = 4
 const log_error = 5
 const log_fatal = 6
 const log_none = 7
+# KeyboardKey
 const key_null = 0
 const key_apostrophe = 39
 const key_comma = 44
@@ -141,6 +148,7 @@ const key_back = 4
 const key_menu = 82
 const key_volume_up = 24
 const key_volume_down = 25
+# MouseButton
 const mouse_button_left = 0
 const mouse_button_right = 1
 const mouse_button_middle = 2
@@ -148,6 +156,7 @@ const mouse_button_side = 3
 const mouse_button_extra = 4
 const mouse_button_forward = 5
 const mouse_button_back = 6
+# MouseCursor
 const mouse_cursor_default = 0
 const mouse_cursor_arrow = 1
 const mouse_cursor_ibeam = 2
@@ -159,6 +168,7 @@ const mouse_cursor_resize_nwse = 7
 const mouse_cursor_resize_nesw = 8
 const mouse_cursor_resize_all = 9
 const mouse_cursor_not_allowed = 10
+# GamepadButton
 const gamepad_button_unknown = 0
 const gamepad_button_left_face_up = 1
 const gamepad_button_left_face_right = 2
@@ -177,12 +187,14 @@ const gamepad_button_middle = 14
 const gamepad_button_middle_right = 15
 const gamepad_button_left_thumb = 16
 const gamepad_button_right_thumb = 17
+# GamepadAxis
 const gamepad_axis_left_x = 0
 const gamepad_axis_left_y = 1
 const gamepad_axis_right_x = 2
 const gamepad_axis_right_y = 3
 const gamepad_axis_left_trigger = 4
 const gamepad_axis_right_trigger = 5
+# MaterialMapIndex
 const material_map_albedo = 0
 const material_map_metalness = 1
 const material_map_normal = 2
@@ -194,6 +206,7 @@ const material_map_cubemap = 7
 const material_map_irradiance = 8
 const material_map_prefilter = 9
 const material_map_brdf = 10
+# ShaderLocationIndex
 const shader_loc_vertex_position = 0
 const shader_loc_vertex_texcoord01 = 1
 const shader_loc_vertex_texcoord02 = 2
@@ -220,6 +233,7 @@ const shader_loc_map_cubemap = 22
 const shader_loc_map_irradiance = 23
 const shader_loc_map_prefilter = 24
 const shader_loc_map_brdf = 25
+# ShaderUniformDataType
 const shader_uniform_float = 0
 const shader_uniform_vec2 = 1
 const shader_uniform_vec3 = 2
@@ -229,10 +243,12 @@ const shader_uniform_ivec2 = 5
 const shader_uniform_ivec3 = 6
 const shader_uniform_ivec4 = 7
 const shader_uniform_sampler2d = 8
+# ShaderAttributeDataType
 const shader_attrib_float = 0
 const shader_attrib_vec2 = 1
 const shader_attrib_vec3 = 2
 const shader_attrib_vec4 = 3
+# PixelFormat
 const pixelformat_uncompressed_grayscale = 1
 const pixelformat_uncompressed_gray_alpha = 2
 const pixelformat_uncompressed_r5g6b5 = 3
@@ -254,31 +270,38 @@ const pixelformat_compressed_pvrt_rgb = 18
 const pixelformat_compressed_pvrt_rgba = 19
 const pixelformat_compressed_astc_4x4_rgba = 20
 const pixelformat_compressed_astc_8x8_rgba = 21
+# TextureFilter
 const texture_filter_point = 0
 const texture_filter_bilinear = 1
 const texture_filter_trilinear = 2
 const texture_filter_anisotropic_4x = 3
 const texture_filter_anisotropic_8x = 4
 const texture_filter_anisotropic_16x = 5
+# TextureWrap
 const texture_wrap_repeat = 0
 const texture_wrap_clamp = 1
 const texture_wrap_mirror_repeat = 2
 const texture_wrap_mirror_clamp = 3
+# CubemapLayout
 const cubemap_layout_auto_detect = 0
 const cubemap_layout_line_vertical = 1
 const cubemap_layout_line_horizontal = 2
 const cubemap_layout_cross_three_by_four = 3
 const cubemap_layout_cross_four_by_three = 4
 const cubemap_layout_panorama = 5
+# FontType
 const font_default = 0
 const font_bitmap = 1
 const font_sdf = 2
+# BlendMode
 const blend_alpha = 0
 const blend_additive = 1
 const blend_multiplied = 2
 const blend_add_colors = 3
 const blend_subtract_colors = 4
-const blend_custom = 5
+const blend_alpha_premultiply = 5
+const blend_custom = 6
+# Gesture
 const gesture_none = 0
 const gesture_tap = 1
 const gesture_doubletap = 2
@@ -290,32 +313,42 @@ const gesture_swipe_up = 64
 const gesture_swipe_down = 128
 const gesture_pinch_in = 256
 const gesture_pinch_out = 512
+# CameraMode
 const camera_custom = 0
 const camera_free = 1
 const camera_orbital = 2
 const camera_first_person = 3
 const camera_third_person = 4
+# CameraProjection
 const camera_perspective = 0
 const camera_orthographic = 1
+# NPatchLayout
 const npatch_nine_patch = 0
 const npatch_three_patch_vertical = 1
 const npatch_three_patch_horizontal = 2
-## RAYLIB STRUCTS
+# end enums
+# start structs
 struct Vector2
     x::Cfloat
     y::Cfloat
 end
+
+
 struct Vector3
     x::Cfloat
     y::Cfloat
     z::Cfloat
 end
+
+
 struct Vector4
     x::Cfloat
     y::Cfloat
     z::Cfloat
     w::Cfloat
 end
+
+
 struct GLMatrix
     m0::Cfloat
     m4::Cfloat
@@ -334,18 +367,24 @@ struct GLMatrix
     m11::Cfloat
     m15::Cfloat
 end
+
+
 struct Color
     r::Cuchar
     g::Cuchar
     b::Cuchar
     a::Cuchar
 end
+
+
 struct Rectangle
     x::Cfloat
     y::Cfloat
     width::Cfloat
     height::Cfloat
 end
+
+
 struct Image
     data::Ptr{Cvoid}
     width::Cint
@@ -353,6 +392,8 @@ struct Image
     mipmaps::Cint
     format::Cint
 end
+
+
 struct Texture
     id::Cuint
     width::Cint
@@ -360,11 +401,15 @@ struct Texture
     mipmaps::Cint
     format::Cint
 end
+
+
 struct RenderTexture
     id::Cuint
     texture::Texture
     depth::Texture
 end
+
+
 struct NPatchInfo
     source::Rectangle
     left::Cint
@@ -373,6 +418,8 @@ struct NPatchInfo
     bottom::Cint
     layout::Cint
 end
+
+
 struct GlyphInfo
     value::Cint
     offsetX::Cint
@@ -380,6 +427,8 @@ struct GlyphInfo
     advanceX::Cint
     image::Image
 end
+
+
 struct Font
     baseSize::Cint
     glyphCount::Cint
@@ -388,6 +437,8 @@ struct Font
     recs::Ptr{Rectangle}
     glyphs::Ptr{GlyphInfo}
 end
+
+
 struct Camera3D
     position::Vector3
     target::Vector3
@@ -395,12 +446,16 @@ struct Camera3D
     fovy::Cfloat
     projection::Cint
 end
+
+
 struct Camera2D
     offset::Vector2
     target::Vector2
     rotation::Cfloat
     zoom::Cfloat
 end
+
+
 struct Mesh
     vertexCount::Cint
     triangleCount::Cint
@@ -418,29 +473,41 @@ struct Mesh
     vaoId::Cuint
     vboId::Ptr{Cuint}
 end
+
+
 struct Shader
     id::Cuint
     locs::Ptr{Cint}
 end
+
+
 struct MaterialMap
     texture::Texture
     color::Color
     value::Cfloat
 end
+
+
 struct Material
     shader::Shader
     maps::Ptr{MaterialMap}
-    params::Vector{Cfloat}
+    params::Ptr{Cfloat}
 end
+
+
 struct Transform
     translation::Vector3
     rotation::Vector4
     scale::Vector3
 end
+
+
 struct BoneInfo
-    name::Vector{Cchar}
+    name::Ptr{Cchar}
     parent::Cint
 end
+
+
 struct Model
     transform::GLMatrix
     meshCount::Cint
@@ -452,26 +519,36 @@ struct Model
     bones::Ptr{BoneInfo}
     bindPose::Ptr{Transform}
 end
+
+
 struct ModelAnimation
     boneCount::Cint
     frameCount::Cint
     bones::Ptr{BoneInfo}
     framePoses::Ptr{Ptr{Transform}}
 end
+
+
 struct Ray
     position::Vector3
     direction::Vector3
 end
+
+
 struct RayCollision
     hit::Bool
     distance::Cfloat
     point::Vector3
     normal::Vector3
 end
+
+
 struct BoundingBox
     min::Vector3
     max::Vector3
 end
+
+
 struct Wave
     frameCount::Cuint
     sampleRate::Cuint
@@ -479,16 +556,23 @@ struct Wave
     channels::Cuint
     data::Ptr{Cvoid}
 end
+
+
 struct AudioStream
     buffer::Ptr{Cvoid}
+    processor::Ptr{Cvoid}
     sampleRate::Cuint
     sampleSize::Cuint
     channels::Cuint
 end
+
+
 struct Sound
     stream::AudioStream
     frameCount::Cuint
 end
+
+
 struct Music
     stream::AudioStream
     frameCount::Cuint
@@ -496,6 +580,8 @@ struct Music
     ctxType::Cint
     ctxData::Ptr{Cvoid}
 end
+
+
 struct VrDeviceInfo
     hResolution::Cint
     vResolution::Cint
@@ -505,25 +591,37 @@ struct VrDeviceInfo
     eyeToScreenDistance::Cfloat
     lensSeparationDistance::Cfloat
     interpupillaryDistance::Cfloat
-    lensDistortionValues::Vector{Cfloat}
-    chromaAbCorrection::Vector{Cfloat}
+    lensDistortionValues::Ptr{Cfloat}
+    chromaAbCorrection::Ptr{Cfloat}
 end
+
+
 struct VrStereoConfig
-    projection::Vector{GLMatrix}
-    viewOffset::Vector{GLMatrix}
-    leftLensCenter::Vector{Cfloat}
-    rightLensCenter::Vector{Cfloat}
-    leftScreenCenter::Vector{Cfloat}
-    rightScreenCenter::Vector{Cfloat}
-    scale::Vector{Cfloat}
-    scaleIn::Vector{Cfloat}
+    projection::Ptr{GLMatrix}
+    viewOffset::Ptr{GLMatrix}
+    leftLensCenter::Ptr{Cfloat}
+    rightLensCenter::Ptr{Cfloat}
+    leftScreenCenter::Ptr{Cfloat}
+    rightScreenCenter::Ptr{Cfloat}
+    scale::Ptr{Cfloat}
+    scaleIn::Ptr{Cfloat}
 end
-## RAYLIB FUNCTIONS
-function InitWindow(width::Int, height::Int, title::String)
+
+
+struct FilePathList
+    capacity::Cuint
+    count::Cuint
+    paths::Ptr{Ptr{Cchar}}
+end
+
+
+# end structs
+# start functions
+function InitWindow(width::Int64, height::Int64, title::String)
     ccall(
         (:InitWindow, raylib_lib_path),
         Cvoid,
-        (Cint, Cint, Cstring),
+        (Cint, Cint, Ptr{Cchar}),
         width,
         height,
         title,
@@ -581,19 +679,22 @@ function SetWindowIcon(image::Image)
     ccall((:SetWindowIcon, raylib_lib_path), Cvoid, (Image,), image)
 end
 function SetWindowTitle(title::String)
-    ccall((:SetWindowTitle, raylib_lib_path), Cvoid, (Cstring,), title)
+    ccall((:SetWindowTitle, raylib_lib_path), Cvoid, (Ptr{Cchar},), title)
 end
-function SetWindowPosition(x::Int, y::Int)
+function SetWindowPosition(x::Int64, y::Int64)
     ccall((:SetWindowPosition, raylib_lib_path), Cvoid, (Cint, Cint), x, y)
 end
-function SetWindowMonitor(monitor::Int)
+function SetWindowMonitor(monitor::Int64)
     ccall((:SetWindowMonitor, raylib_lib_path), Cvoid, (Cint,), monitor)
 end
-function SetWindowMinSize(width::Int, height::Int)
+function SetWindowMinSize(width::Int64, height::Int64)
     ccall((:SetWindowMinSize, raylib_lib_path), Cvoid, (Cint, Cint), width, height)
 end
-function SetWindowSize(width::Int, height::Int)
+function SetWindowSize(width::Int64, height::Int64)
     ccall((:SetWindowSize, raylib_lib_path), Cvoid, (Cint, Cint), width, height)
+end
+function SetWindowOpacity(opacity::Float64)
+    ccall((:SetWindowOpacity, raylib_lib_path), Cvoid, (Cfloat,), opacity)
 end
 function GetWindowHandle()
     return ccall((:GetWindowHandle, raylib_lib_path), Ptr{Cvoid}, ())
@@ -604,28 +705,34 @@ end
 function GetScreenHeight()
     return ccall((:GetScreenHeight, raylib_lib_path), Cint, ())
 end
+function GetRenderWidth()
+    return ccall((:GetRenderWidth, raylib_lib_path), Cint, ())
+end
+function GetRenderHeight()
+    return ccall((:GetRenderHeight, raylib_lib_path), Cint, ())
+end
 function GetMonitorCount()
     return ccall((:GetMonitorCount, raylib_lib_path), Cint, ())
 end
 function GetCurrentMonitor()
     return ccall((:GetCurrentMonitor, raylib_lib_path), Cint, ())
 end
-function GetMonitorPosition(monitor::Int)
+function GetMonitorPosition(monitor::Int64)
     return ccall((:GetMonitorPosition, raylib_lib_path), Vector2, (Cint,), monitor)
 end
-function GetMonitorWidth(monitor::Int)
+function GetMonitorWidth(monitor::Int64)
     return ccall((:GetMonitorWidth, raylib_lib_path), Cint, (Cint,), monitor)
 end
-function GetMonitorHeight(monitor::Int)
+function GetMonitorHeight(monitor::Int64)
     return ccall((:GetMonitorHeight, raylib_lib_path), Cint, (Cint,), monitor)
 end
-function GetMonitorPhysicalWidth(monitor::Int)
+function GetMonitorPhysicalWidth(monitor::Int64)
     return ccall((:GetMonitorPhysicalWidth, raylib_lib_path), Cint, (Cint,), monitor)
 end
-function GetMonitorPhysicalHeight(monitor::Int)
+function GetMonitorPhysicalHeight(monitor::Int64)
     return ccall((:GetMonitorPhysicalHeight, raylib_lib_path), Cint, (Cint,), monitor)
 end
-function GetMonitorRefreshRate(monitor::Int)
+function GetMonitorRefreshRate(monitor::Int64)
     return ccall((:GetMonitorRefreshRate, raylib_lib_path), Cint, (Cint,), monitor)
 end
 function GetWindowPosition()
@@ -634,14 +741,20 @@ end
 function GetWindowScaleDPI()
     return ccall((:GetWindowScaleDPI, raylib_lib_path), Vector2, ())
 end
-function GetMonitorName(monitor::Int)
-    return ccall((:GetMonitorName, raylib_lib_path), Cstring, (Cint,), monitor)
+function GetMonitorName(monitor::Int64)
+    return ccall((:GetMonitorName, raylib_lib_path), Ptr{Cchar}, (Cint,), monitor)
 end
 function SetClipboardText(text::String)
-    ccall((:SetClipboardText, raylib_lib_path), Cvoid, (Cstring,), text)
+    ccall((:SetClipboardText, raylib_lib_path), Cvoid, (Ptr{Cchar},), text)
 end
 function GetClipboardText()
-    return ccall((:GetClipboardText, raylib_lib_path), Cstring, ())
+    return ccall((:GetClipboardText, raylib_lib_path), Ptr{Cchar}, ())
+end
+function EnableEventWaiting()
+    ccall((:EnableEventWaiting, raylib_lib_path), Cvoid, ())
+end
+function DisableEventWaiting()
+    ccall((:DisableEventWaiting, raylib_lib_path), Cvoid, ())
 end
 function SwapScreenBuffer()
     ccall((:SwapScreenBuffer, raylib_lib_path), Cvoid, ())
@@ -649,8 +762,8 @@ end
 function PollInputEvents()
     ccall((:PollInputEvents, raylib_lib_path), Cvoid, ())
 end
-function WaitTime(ms::Float64)
-    ccall((:WaitTime, raylib_lib_path), Cvoid, (Cfloat,), ms)
+function WaitTime(seconds::Cdouble)
+    ccall((:WaitTime, raylib_lib_path), Cvoid, (Cdouble,), seconds)
 end
 function ShowCursor()
     ccall((:ShowCursor, raylib_lib_path), Cvoid, ())
@@ -703,13 +816,13 @@ end
 function EndShaderMode()
     ccall((:EndShaderMode, raylib_lib_path), Cvoid, ())
 end
-function BeginBlendMode(mode::Int)
+function BeginBlendMode(mode::Int64)
     ccall((:BeginBlendMode, raylib_lib_path), Cvoid, (Cint,), mode)
 end
 function EndBlendMode()
     ccall((:EndBlendMode, raylib_lib_path), Cvoid, ())
 end
-function BeginScissorMode(x::Int, y::Int, width::Int, height::Int)
+function BeginScissorMode(x::Int64, y::Int64, width::Int64, height::Int64)
     ccall(
         (:BeginScissorMode, raylib_lib_path),
         Cvoid,
@@ -744,7 +857,7 @@ function LoadShader(vsFileName::String, fsFileName::String)
     return ccall(
         (:LoadShader, raylib_lib_path),
         Shader,
-        (Cstring, Cstring),
+        (Ptr{Cchar}, Ptr{Cchar}),
         vsFileName,
         fsFileName,
     )
@@ -753,7 +866,7 @@ function LoadShaderFromMemory(vsCode::String, fsCode::String)
     return ccall(
         (:LoadShaderFromMemory, raylib_lib_path),
         Shader,
-        (Cstring, Cstring),
+        (Ptr{Cchar}, Ptr{Cchar}),
         vsCode,
         fsCode,
     )
@@ -762,7 +875,7 @@ function GetShaderLocation(shader::Shader, uniformName::String)
     return ccall(
         (:GetShaderLocation, raylib_lib_path),
         Cint,
-        (Shader, Cstring),
+        (Shader, Ptr{Cchar}),
         shader,
         uniformName,
     )
@@ -771,12 +884,17 @@ function GetShaderLocationAttrib(shader::Shader, attribName::String)
     return ccall(
         (:GetShaderLocationAttrib, raylib_lib_path),
         Cint,
-        (Shader, Cstring),
+        (Shader, Ptr{Cchar}),
         shader,
         attribName,
     )
 end
-function SetShaderValue(shader::Shader, locIndex::Int, value::Ptr{Cvoid}, uniformType::Int)
+function SetShaderValue(
+    shader::Shader,
+    locIndex::Int64,
+    value::Ptr{Cvoid},
+    uniformType::Int64,
+)
     ccall(
         (:SetShaderValue, raylib_lib_path),
         Cvoid,
@@ -789,10 +907,10 @@ function SetShaderValue(shader::Shader, locIndex::Int, value::Ptr{Cvoid}, unifor
 end
 function SetShaderValueV(
     shader::Shader,
-    locIndex::Int,
+    locIndex::Int64,
     value::Ptr{Cvoid},
-    uniformType::Int,
-    count::Int,
+    uniformType::Int64,
+    count::Int64,
 )
     ccall(
         (:SetShaderValueV, raylib_lib_path),
@@ -805,7 +923,7 @@ function SetShaderValueV(
         count,
     )
 end
-function SetShaderValueMatrix(shader::Shader, locIndex::Int, mat::GLMatrix)
+function SetShaderValueMatrix(shader::Shader, locIndex::Int64, mat::GLMatrix)
     ccall(
         (:SetShaderValueMatrix, raylib_lib_path),
         Cvoid,
@@ -815,7 +933,7 @@ function SetShaderValueMatrix(shader::Shader, locIndex::Int, mat::GLMatrix)
         mat,
     )
 end
-function SetShaderValueTexture(shader::Shader, locIndex::Int, texture::Texture)
+function SetShaderValueTexture(shader::Shader, locIndex::Int64, texture::Texture)
     ccall(
         (:SetShaderValueTexture, raylib_lib_path),
         Cvoid,
@@ -852,7 +970,21 @@ function GetWorldToScreen(position::Vector3, camera::Camera3D)
         camera,
     )
 end
-function GetWorldToScreenEx(position::Vector3, camera::Camera3D, width::Int, height::Int)
+function GetScreenToWorld2D(position::Vector2, camera::Camera2D)
+    return ccall(
+        (:GetScreenToWorld2D, raylib_lib_path),
+        Vector2,
+        (Vector2, Camera2D),
+        position,
+        camera,
+    )
+end
+function GetWorldToScreenEx(
+    position::Vector3,
+    camera::Camera3D,
+    width::Int64,
+    height::Int64,
+)
     return ccall(
         (:GetWorldToScreenEx, raylib_lib_path),
         Vector2,
@@ -872,16 +1004,7 @@ function GetWorldToScreen2D(position::Vector2, camera::Camera2D)
         camera,
     )
 end
-function GetScreenToWorld2D(position::Vector2, camera::Camera2D)
-    return ccall(
-        (:GetScreenToWorld2D, raylib_lib_path),
-        Vector2,
-        (Vector2, Camera2D),
-        position,
-        camera,
-    )
-end
-function SetTargetFPS(fps::Int)
+function SetTargetFPS(fps::Int64)
     ccall((:SetTargetFPS, raylib_lib_path), Cvoid, (Cint,), fps)
 end
 function GetFPS()
@@ -893,35 +1016,53 @@ end
 function GetTime()
     return ccall((:GetTime, raylib_lib_path), Cdouble, ())
 end
-function GetRandomValue(min::Int, max::Int)
+function GetRandomValue(min::Int64, max::Int64)
     return ccall((:GetRandomValue, raylib_lib_path), Cint, (Cint, Cint), min, max)
 end
 function SetRandomSeed(seed::Cuint)
     ccall((:SetRandomSeed, raylib_lib_path), Cvoid, (Cuint,), seed)
 end
 function TakeScreenshot(fileName::String)
-    ccall((:TakeScreenshot, raylib_lib_path), Cvoid, (Cstring,), fileName)
+    ccall((:TakeScreenshot, raylib_lib_path), Cvoid, (Ptr{Cchar},), fileName)
 end
 function SetConfigFlags(flags::Cuint)
     ccall((:SetConfigFlags, raylib_lib_path), Cvoid, (Cuint,), flags)
 end
-function SetTraceLogLevel(logLevel::Int)
+function SetTraceLogLevel(logLevel::Int64)
     ccall((:SetTraceLogLevel, raylib_lib_path), Cvoid, (Cint,), logLevel)
 end
-function MemAlloc(size::Int)
+function MemAlloc(size::Int64)
     return ccall((:MemAlloc, raylib_lib_path), Ptr{Cvoid}, (Cint,), size)
 end
-function MemRealloc(ptr::Ptr{Cvoid}, size::Int)
+function MemRealloc(ptr::Ptr{Cvoid}, size::Int64)
     return ccall((:MemRealloc, raylib_lib_path), Ptr{Cvoid}, (Ptr{Cvoid}, Cint), ptr, size)
 end
 function MemFree(ptr::Ptr{Cvoid})
     ccall((:MemFree, raylib_lib_path), Cvoid, (Ptr{Cvoid},), ptr)
 end
+function OpenURL(url::String)
+    ccall((:OpenURL, raylib_lib_path), Cvoid, (Ptr{Cchar},), url)
+end
+function SetTraceLogCallback(callback::Ptr{Cvoid})
+    ccall((:SetTraceLogCallback, raylib_lib_path), Cvoid, (Ptr{Cvoid},), callback)
+end
+function SetLoadFileDataCallback(callback::Ptr{Cvoid})
+    ccall((:SetLoadFileDataCallback, raylib_lib_path), Cvoid, (Ptr{Cvoid},), callback)
+end
+function SetSaveFileDataCallback(callback::Ptr{Cvoid})
+    ccall((:SetSaveFileDataCallback, raylib_lib_path), Cvoid, (Ptr{Cvoid},), callback)
+end
+function SetLoadFileTextCallback(callback::Ptr{Cvoid})
+    ccall((:SetLoadFileTextCallback, raylib_lib_path), Cvoid, (Ptr{Cvoid},), callback)
+end
+function SetSaveFileTextCallback(callback::Ptr{Cvoid})
+    ccall((:SetSaveFileTextCallback, raylib_lib_path), Cvoid, (Ptr{Cvoid},), callback)
+end
 function LoadFileData(fileName::String, bytesRead::Ptr{Cuint})
     return ccall(
         (:LoadFileData, raylib_lib_path),
         Ptr{Cuchar},
-        (Cstring, Ptr{Cuint}),
+        (Ptr{Cchar}, Ptr{Cuint}),
         fileName,
         bytesRead,
     )
@@ -933,142 +1074,177 @@ function SaveFileData(fileName::String, data::Ptr{Cvoid}, bytesToWrite::Cuint)
     return ccall(
         (:SaveFileData, raylib_lib_path),
         Bool,
-        (Cstring, Ptr{Cvoid}, Cuint),
+        (Ptr{Cchar}, Ptr{Cvoid}, Cuint),
         fileName,
         data,
         bytesToWrite,
     )
 end
+function ExportDataAsCode(data::String, size::Cuint, fileName::String)
+    return ccall(
+        (:ExportDataAsCode, raylib_lib_path),
+        Bool,
+        (Ptr{Cchar}, Cuint, Ptr{Cchar}),
+        data,
+        size,
+        fileName,
+    )
+end
 function LoadFileText(fileName::String)
-    return ccall((:LoadFileText, raylib_lib_path), Cstring, (Cstring,), fileName)
+    return ccall((:LoadFileText, raylib_lib_path), Ptr{Cchar}, (Ptr{Cchar},), fileName)
 end
 function UnloadFileText(text::String)
-    ccall((:UnloadFileText, raylib_lib_path), Cvoid, (Cstring,), text)
+    ccall((:UnloadFileText, raylib_lib_path), Cvoid, (Ptr{Cchar},), text)
 end
 function SaveFileText(fileName::String, text::String)
-    return ccall((:SaveFileText, raylib_lib_path), Bool, (Cstring, Cstring), fileName, text)
+    return ccall(
+        (:SaveFileText, raylib_lib_path),
+        Bool,
+        (Ptr{Cchar}, Ptr{Cchar}),
+        fileName,
+        text,
+    )
 end
 function FileExists(fileName::String)
-    return ccall((:FileExists, raylib_lib_path), Bool, (Cstring,), fileName)
+    return ccall((:FileExists, raylib_lib_path), Bool, (Ptr{Cchar},), fileName)
 end
 function DirectoryExists(dirPath::String)
-    return ccall((:DirectoryExists, raylib_lib_path), Bool, (Cstring,), dirPath)
+    return ccall((:DirectoryExists, raylib_lib_path), Bool, (Ptr{Cchar},), dirPath)
 end
 function IsFileExtension(fileName::String, ext::String)
     return ccall(
         (:IsFileExtension, raylib_lib_path),
         Bool,
-        (Cstring, Cstring),
+        (Ptr{Cchar}, Ptr{Cchar}),
         fileName,
         ext,
     )
 end
+function GetFileLength(fileName::String)
+    return ccall((:GetFileLength, raylib_lib_path), Cint, (Ptr{Cchar},), fileName)
+end
 function GetFileExtension(fileName::String)
-    return ccall((:GetFileExtension, raylib_lib_path), Cstring, (Cstring,), fileName)
+    return ccall((:GetFileExtension, raylib_lib_path), Ptr{Cchar}, (Ptr{Cchar},), fileName)
 end
 function GetFileName(filePath::String)
-    return ccall((:GetFileName, raylib_lib_path), Cstring, (Cstring,), filePath)
+    return ccall((:GetFileName, raylib_lib_path), Ptr{Cchar}, (Ptr{Cchar},), filePath)
 end
 function GetFileNameWithoutExt(filePath::String)
-    return ccall((:GetFileNameWithoutExt, raylib_lib_path), Cstring, (Cstring,), filePath)
-end
-function GetDirectoryPath(filePath::String)
-    return ccall((:GetDirectoryPath, raylib_lib_path), Cstring, (Cstring,), filePath)
-end
-function GetPrevDirectoryPath(dirPath::String)
-    return ccall((:GetPrevDirectoryPath, raylib_lib_path), Cstring, (Cstring,), dirPath)
-end
-function GetWorkingDirectory()
-    return ccall((:GetWorkingDirectory, raylib_lib_path), Cstring, ())
-end
-function GetDirectoryFiles(dirPath::String, count::Ptr{Cint})
     return ccall(
-        (:GetDirectoryFiles, raylib_lib_path),
-        Cstring,
-        (Cstring, Ptr{Cint}),
-        dirPath,
-        count,
+        (:GetFileNameWithoutExt, raylib_lib_path),
+        Ptr{Cchar},
+        (Ptr{Cchar},),
+        filePath,
     )
 end
-function ClearDirectoryFiles()
-    ccall((:ClearDirectoryFiles, raylib_lib_path), Cvoid, ())
+function GetDirectoryPath(filePath::String)
+    return ccall((:GetDirectoryPath, raylib_lib_path), Ptr{Cchar}, (Ptr{Cchar},), filePath)
+end
+function GetPrevDirectoryPath(dirPath::String)
+    return ccall(
+        (:GetPrevDirectoryPath, raylib_lib_path),
+        Ptr{Cchar},
+        (Ptr{Cchar},),
+        dirPath,
+    )
+end
+function GetWorkingDirectory()
+    return ccall((:GetWorkingDirectory, raylib_lib_path), Ptr{Cchar}, ())
+end
+function GetApplicationDirectory()
+    return ccall((:GetApplicationDirectory, raylib_lib_path), Ptr{Cchar}, ())
 end
 function ChangeDirectory(dir::String)
-    return ccall((:ChangeDirectory, raylib_lib_path), Bool, (Cstring,), dir)
+    return ccall((:ChangeDirectory, raylib_lib_path), Bool, (Ptr{Cchar},), dir)
+end
+function IsPathFile(path::String)
+    return ccall((:IsPathFile, raylib_lib_path), Bool, (Ptr{Cchar},), path)
+end
+function LoadDirectoryFiles(dirPath::String)
+    return ccall(
+        (:LoadDirectoryFiles, raylib_lib_path),
+        FilePathList,
+        (Ptr{Cchar},),
+        dirPath,
+    )
+end
+function LoadDirectoryFilesEx(basePath::String, filter::String, scanSubdirs::Bool)
+    return ccall(
+        (:LoadDirectoryFilesEx, raylib_lib_path),
+        FilePathList,
+        (Ptr{Cchar}, Ptr{Cchar}, Bool),
+        basePath,
+        filter,
+        scanSubdirs,
+    )
+end
+function UnloadDirectoryFiles(files::FilePathList)
+    ccall((:UnloadDirectoryFiles, raylib_lib_path), Cvoid, (FilePathList,), files)
 end
 function IsFileDropped()
     return ccall((:IsFileDropped, raylib_lib_path), Bool, ())
 end
-function GetDroppedFiles(count::Ptr{Cint})
-    return ccall((:GetDroppedFiles, raylib_lib_path), Cstring, (Ptr{Cint},), count)
+function LoadDroppedFiles()
+    return ccall((:LoadDroppedFiles, raylib_lib_path), FilePathList, ())
 end
-function ClearDroppedFiles()
-    ccall((:ClearDroppedFiles, raylib_lib_path), Cvoid, ())
+function UnloadDroppedFiles(files::FilePathList)
+    ccall((:UnloadDroppedFiles, raylib_lib_path), Cvoid, (FilePathList,), files)
 end
 function GetFileModTime(fileName::String)
-    return ccall((:GetFileModTime, raylib_lib_path), Clong, (Cstring,), fileName)
+    return ccall((:GetFileModTime, raylib_lib_path), Clong, (Ptr{Cchar},), fileName)
 end
-function CompressData(data::Ptr{Cuchar}, dataLength::Int, compDataLength::Ptr{Cint})
+function CompressData(data::Ptr{Cuchar}, dataSize::Int64, compDataSize::Ptr{Int64})
     return ccall(
         (:CompressData, raylib_lib_path),
         Ptr{Cuchar},
         (Ptr{Cuchar}, Cint, Ptr{Cint}),
         data,
-        dataLength,
-        compDataLength,
+        dataSize,
+        compDataSize,
     )
 end
-function DecompressData(compData::Ptr{Cuchar}, compDataLength::Int, dataLength::Ptr{Cint})
+function DecompressData(compData::Ptr{Cuchar}, compDataSize::Int64, dataSize::Ptr{Int64})
     return ccall(
         (:DecompressData, raylib_lib_path),
         Ptr{Cuchar},
         (Ptr{Cuchar}, Cint, Ptr{Cint}),
         compData,
-        compDataLength,
-        dataLength,
+        compDataSize,
+        dataSize,
     )
 end
-function EncodeDataBase64(data::Ptr{Cuchar}, dataLength::Int, outputLength::Ptr{Cint})
+function EncodeDataBase64(data::Ptr{Cuchar}, dataSize::Int64, outputSize::Ptr{Int64})
     return ccall(
         (:EncodeDataBase64, raylib_lib_path),
-        Cstring,
+        Ptr{Cchar},
         (Ptr{Cuchar}, Cint, Ptr{Cint}),
         data,
-        dataLength,
-        outputLength,
+        dataSize,
+        outputSize,
     )
 end
-function DecodeDataBase64(data::Ptr{Cuchar}, outputLength::Ptr{Cint})
+function DecodeDataBase64(data::Ptr{Cuchar}, outputSize::Ptr{Int64})
     return ccall(
         (:DecodeDataBase64, raylib_lib_path),
         Ptr{Cuchar},
         (Ptr{Cuchar}, Ptr{Cint}),
         data,
-        outputLength,
+        outputSize,
     )
 end
-function SaveStorageValue(position::Cuint, value::Int)
-    return ccall((:SaveStorageValue, raylib_lib_path), Bool, (Cuint, Cint), position, value)
-end
-function LoadStorageValue(position::Cuint)
-    return ccall((:LoadStorageValue, raylib_lib_path), Cint, (Cuint,), position)
-end
-function OpenURL(url::String)
-    ccall((:OpenURL, raylib_lib_path), Cvoid, (Cstring,), url)
-end
-function IsKeyPressed(key::Int)
+function IsKeyPressed(key::Int64)
     return ccall((:IsKeyPressed, raylib_lib_path), Bool, (Cint,), key)
 end
-function IsKeyDown(key::Int)
+function IsKeyDown(key::Int64)
     return ccall((:IsKeyDown, raylib_lib_path), Bool, (Cint,), key)
 end
-function IsKeyReleased(key::Int)
+function IsKeyReleased(key::Int64)
     return ccall((:IsKeyReleased, raylib_lib_path), Bool, (Cint,), key)
 end
-function IsKeyUp(key::Int)
+function IsKeyUp(key::Int64)
     return ccall((:IsKeyUp, raylib_lib_path), Bool, (Cint,), key)
 end
-function SetExitKey(key::Int)
+function SetExitKey(key::Int64)
     ccall((:SetExitKey, raylib_lib_path), Cvoid, (Cint,), key)
 end
 function GetKeyPressed()
@@ -1077,13 +1253,13 @@ end
 function GetCharPressed()
     return ccall((:GetCharPressed, raylib_lib_path), Cint, ())
 end
-function IsGamepadAvailable(gamepad::Int)
+function IsGamepadAvailable(gamepad::Int64)
     return ccall((:IsGamepadAvailable, raylib_lib_path), Bool, (Cint,), gamepad)
 end
-function GetGamepadName(gamepad::Int)
-    return ccall((:GetGamepadName, raylib_lib_path), Cstring, (Cint,), gamepad)
+function GetGamepadName(gamepad::Int64)
+    return ccall((:GetGamepadName, raylib_lib_path), Ptr{Cchar}, (Cint,), gamepad)
 end
-function IsGamepadButtonPressed(gamepad::Int, button::Int)
+function IsGamepadButtonPressed(gamepad::Int64, button::Int64)
     return ccall(
         (:IsGamepadButtonPressed, raylib_lib_path),
         Bool,
@@ -1092,7 +1268,7 @@ function IsGamepadButtonPressed(gamepad::Int, button::Int)
         button,
     )
 end
-function IsGamepadButtonDown(gamepad::Int, button::Int)
+function IsGamepadButtonDown(gamepad::Int64, button::Int64)
     return ccall(
         (:IsGamepadButtonDown, raylib_lib_path),
         Bool,
@@ -1101,7 +1277,7 @@ function IsGamepadButtonDown(gamepad::Int, button::Int)
         button,
     )
 end
-function IsGamepadButtonReleased(gamepad::Int, button::Int)
+function IsGamepadButtonReleased(gamepad::Int64, button::Int64)
     return ccall(
         (:IsGamepadButtonReleased, raylib_lib_path),
         Bool,
@@ -1110,16 +1286,16 @@ function IsGamepadButtonReleased(gamepad::Int, button::Int)
         button,
     )
 end
-function IsGamepadButtonUp(gamepad::Int, button::Int)
+function IsGamepadButtonUp(gamepad::Int64, button::Int64)
     return ccall((:IsGamepadButtonUp, raylib_lib_path), Bool, (Cint, Cint), gamepad, button)
 end
 function GetGamepadButtonPressed()
     return ccall((:GetGamepadButtonPressed, raylib_lib_path), Cint, ())
 end
-function GetGamepadAxisCount(gamepad::Int)
+function GetGamepadAxisCount(gamepad::Int64)
     return ccall((:GetGamepadAxisCount, raylib_lib_path), Cint, (Cint,), gamepad)
 end
-function GetGamepadAxisMovement(gamepad::Int, axis::Int)
+function GetGamepadAxisMovement(gamepad::Int64, axis::Int64)
     return ccall(
         (:GetGamepadAxisMovement, raylib_lib_path),
         Cfloat,
@@ -1129,18 +1305,18 @@ function GetGamepadAxisMovement(gamepad::Int, axis::Int)
     )
 end
 function SetGamepadMappings(mappings::String)
-    return ccall((:SetGamepadMappings, raylib_lib_path), Cint, (Cstring,), mappings)
+    return ccall((:SetGamepadMappings, raylib_lib_path), Cint, (Ptr{Cchar},), mappings)
 end
-function IsMouseButtonPressed(button::Int)
+function IsMouseButtonPressed(button::Int64)
     return ccall((:IsMouseButtonPressed, raylib_lib_path), Bool, (Cint,), button)
 end
-function IsMouseButtonDown(button::Int)
+function IsMouseButtonDown(button::Int64)
     return ccall((:IsMouseButtonDown, raylib_lib_path), Bool, (Cint,), button)
 end
-function IsMouseButtonReleased(button::Int)
+function IsMouseButtonReleased(button::Int64)
     return ccall((:IsMouseButtonReleased, raylib_lib_path), Bool, (Cint,), button)
 end
-function IsMouseButtonUp(button::Int)
+function IsMouseButtonUp(button::Int64)
     return ccall((:IsMouseButtonUp, raylib_lib_path), Bool, (Cint,), button)
 end
 function GetMouseX()
@@ -1155,10 +1331,10 @@ end
 function GetMouseDelta()
     return ccall((:GetMouseDelta, raylib_lib_path), Vector2, ())
 end
-function SetMousePosition(x::Int, y::Int)
+function SetMousePosition(x::Int64, y::Int64)
     ccall((:SetMousePosition, raylib_lib_path), Cvoid, (Cint, Cint), x, y)
 end
-function SetMouseOffset(offsetX::Int, offsetY::Int)
+function SetMouseOffset(offsetX::Int64, offsetY::Int64)
     ccall((:SetMouseOffset, raylib_lib_path), Cvoid, (Cint, Cint), offsetX, offsetY)
 end
 function SetMouseScale(scaleX::Float64, scaleY::Float64)
@@ -1167,7 +1343,10 @@ end
 function GetMouseWheelMove()
     return ccall((:GetMouseWheelMove, raylib_lib_path), Cfloat, ())
 end
-function SetMouseCursor(cursor::Int)
+function GetMouseWheelMoveV()
+    return ccall((:GetMouseWheelMoveV, raylib_lib_path), Vector2, ())
+end
+function SetMouseCursor(cursor::Int64)
     ccall((:SetMouseCursor, raylib_lib_path), Cvoid, (Cint,), cursor)
 end
 function GetTouchX()
@@ -1176,10 +1355,10 @@ end
 function GetTouchY()
     return ccall((:GetTouchY, raylib_lib_path), Cint, ())
 end
-function GetTouchPosition(index::Int)
+function GetTouchPosition(index::Int64)
     return ccall((:GetTouchPosition, raylib_lib_path), Vector2, (Cint,), index)
 end
-function GetTouchPointId(index::Int)
+function GetTouchPointId(index::Int64)
     return ccall((:GetTouchPointId, raylib_lib_path), Cint, (Cint,), index)
 end
 function GetTouchPointCount()
@@ -1188,7 +1367,7 @@ end
 function SetGesturesEnabled(flags::Cuint)
     ccall((:SetGesturesEnabled, raylib_lib_path), Cvoid, (Cuint,), flags)
 end
-function IsGestureDetected(gesture::Int)
+function IsGestureDetected(gesture::Int64)
     return ccall((:IsGestureDetected, raylib_lib_path), Bool, (Cint,), gesture)
 end
 function GetGestureDetected()
@@ -1209,28 +1388,28 @@ end
 function GetGesturePinchAngle()
     return ccall((:GetGesturePinchAngle, raylib_lib_path), Cfloat, ())
 end
-function SetCameraMode(camera::Camera3D, mode::Int)
+function SetCameraMode(camera::Camera3D, mode::Int64)
     ccall((:SetCameraMode, raylib_lib_path), Cvoid, (Camera3D, Cint), camera, mode)
 end
 function UpdateCamera(camera::Ptr{Camera3D})
     ccall((:UpdateCamera, raylib_lib_path), Cvoid, (Ptr{Camera3D},), camera)
 end
-function SetCameraPanControl(keyPan::Int)
+function SetCameraPanControl(keyPan::Int64)
     ccall((:SetCameraPanControl, raylib_lib_path), Cvoid, (Cint,), keyPan)
 end
-function SetCameraAltControl(keyAlt::Int)
+function SetCameraAltControl(keyAlt::Int64)
     ccall((:SetCameraAltControl, raylib_lib_path), Cvoid, (Cint,), keyAlt)
 end
-function SetCameraSmoothZoomControl(keySmoothZoom::Int)
+function SetCameraSmoothZoomControl(keySmoothZoom::Int64)
     ccall((:SetCameraSmoothZoomControl, raylib_lib_path), Cvoid, (Cint,), keySmoothZoom)
 end
 function SetCameraMoveControls(
-    keyFront::Int,
-    keyBack::Int,
-    keyRight::Int,
-    keyLeft::Int,
-    keyUp::Int,
-    keyDown::Int,
+    keyFront::Int64,
+    keyBack::Int64,
+    keyRight::Int64,
+    keyLeft::Int64,
+    keyUp::Int64,
+    keyDown::Int64,
 )
     ccall(
         (:SetCameraMoveControls, raylib_lib_path),
@@ -1253,13 +1432,19 @@ function SetShapesTexture(texture::Texture, source::Rectangle)
         source,
     )
 end
-function DrawPixel(posX::Int, posY::Int, color::Color)
+function DrawPixel(posX::Int64, posY::Int64, color::Color)
     ccall((:DrawPixel, raylib_lib_path), Cvoid, (Cint, Cint, Color), posX, posY, color)
 end
 function DrawPixelV(position::Vector2, color::Color)
     ccall((:DrawPixelV, raylib_lib_path), Cvoid, (Vector2, Color), position, color)
 end
-function DrawLine(startPosX::Int, startPosY::Int, endPosX::Int, endPosY::Int, color::Color)
+function DrawLine(
+    startPosX::Int64,
+    startPosY::Int64,
+    endPosX::Int64,
+    endPosY::Int64,
+    color::Color,
+)
     ccall(
         (:DrawLine, raylib_lib_path),
         Cvoid,
@@ -1341,7 +1526,7 @@ function DrawLineBezierCubic(
         color,
     )
 end
-function DrawLineStrip(points::Ptr{Vector2}, pointCount::Int, color::Color)
+function DrawLineStrip(points::Ptr{Vector2}, pointCount::Int64, color::Color)
     ccall(
         (:DrawLineStrip, raylib_lib_path),
         Cvoid,
@@ -1351,7 +1536,7 @@ function DrawLineStrip(points::Ptr{Vector2}, pointCount::Int, color::Color)
         color,
     )
 end
-function DrawCircle(centerX::Int, centerY::Int, radius::Float64, color::Color)
+function DrawCircle(centerX::Int64, centerY::Int64, radius::Float64, color::Color)
     ccall(
         (:DrawCircle, raylib_lib_path),
         Cvoid,
@@ -1367,7 +1552,7 @@ function DrawCircleSector(
     radius::Float64,
     startAngle::Float64,
     endAngle::Float64,
-    segments::Int,
+    segments::Int64,
     color::Color,
 )
     ccall(
@@ -1387,7 +1572,7 @@ function DrawCircleSectorLines(
     radius::Float64,
     startAngle::Float64,
     endAngle::Float64,
-    segments::Int,
+    segments::Int64,
     color::Color,
 )
     ccall(
@@ -1403,8 +1588,8 @@ function DrawCircleSectorLines(
     )
 end
 function DrawCircleGradient(
-    centerX::Int,
-    centerY::Int,
+    centerX::Int64,
+    centerY::Int64,
     radius::Float64,
     color1::Color,
     color2::Color,
@@ -1430,7 +1615,7 @@ function DrawCircleV(center::Vector2, radius::Float64, color::Color)
         color,
     )
 end
-function DrawCircleLines(centerX::Int, centerY::Int, radius::Float64, color::Color)
+function DrawCircleLines(centerX::Int64, centerY::Int64, radius::Float64, color::Color)
     ccall(
         (:DrawCircleLines, raylib_lib_path),
         Cvoid,
@@ -1442,8 +1627,8 @@ function DrawCircleLines(centerX::Int, centerY::Int, radius::Float64, color::Col
     )
 end
 function DrawEllipse(
-    centerX::Int,
-    centerY::Int,
+    centerX::Int64,
+    centerY::Int64,
     radiusH::Float64,
     radiusV::Float64,
     color::Color,
@@ -1460,8 +1645,8 @@ function DrawEllipse(
     )
 end
 function DrawEllipseLines(
-    centerX::Int,
-    centerY::Int,
+    centerX::Int64,
+    centerY::Int64,
     radiusH::Float64,
     radiusV::Float64,
     color::Color,
@@ -1483,7 +1668,7 @@ function DrawRing(
     outerRadius::Float64,
     startAngle::Float64,
     endAngle::Float64,
-    segments::Int,
+    segments::Int64,
     color::Color,
 )
     ccall(
@@ -1505,7 +1690,7 @@ function DrawRingLines(
     outerRadius::Float64,
     startAngle::Float64,
     endAngle::Float64,
-    segments::Int,
+    segments::Int64,
     color::Color,
 )
     ccall(
@@ -1521,7 +1706,7 @@ function DrawRingLines(
         color,
     )
 end
-function DrawRectangle(posX::Int, posY::Int, width::Int, height::Int, color::Color)
+function DrawRectangle(posX::Int64, posY::Int64, width::Int64, height::Int64, color::Color)
     ccall(
         (:DrawRectangle, raylib_lib_path),
         Cvoid,
@@ -1558,10 +1743,10 @@ function DrawRectanglePro(rec::Rectangle, origin::Vector2, rotation::Float64, co
     )
 end
 function DrawRectangleGradientV(
-    posX::Int,
-    posY::Int,
-    width::Int,
-    height::Int,
+    posX::Int64,
+    posY::Int64,
+    width::Int64,
+    height::Int64,
     color1::Color,
     color2::Color,
 )
@@ -1578,10 +1763,10 @@ function DrawRectangleGradientV(
     )
 end
 function DrawRectangleGradientH(
-    posX::Int,
-    posY::Int,
-    width::Int,
-    height::Int,
+    posX::Int64,
+    posY::Int64,
+    width::Int64,
+    height::Int64,
     color1::Color,
     color2::Color,
 )
@@ -1615,7 +1800,13 @@ function DrawRectangleGradientEx(
         col4,
     )
 end
-function DrawRectangleLines(posX::Int, posY::Int, width::Int, height::Int, color::Color)
+function DrawRectangleLines(
+    posX::Int64,
+    posY::Int64,
+    width::Int64,
+    height::Int64,
+    color::Color,
+)
     ccall(
         (:DrawRectangleLines, raylib_lib_path),
         Cvoid,
@@ -1640,7 +1831,7 @@ end
 function DrawRectangleRounded(
     rec::Rectangle,
     roundness::Float64,
-    segments::Int,
+    segments::Int64,
     color::Color,
 )
     ccall(
@@ -1656,7 +1847,7 @@ end
 function DrawRectangleRoundedLines(
     rec::Rectangle,
     roundness::Float64,
-    segments::Int,
+    segments::Int64,
     lineThick::Float64,
     color::Color,
 )
@@ -1693,7 +1884,7 @@ function DrawTriangleLines(v1::Vector2, v2::Vector2, v3::Vector2, color::Color)
         color,
     )
 end
-function DrawTriangleFan(points::Ptr{Vector2}, pointCount::Int, color::Color)
+function DrawTriangleFan(points::Ptr{Vector2}, pointCount::Int64, color::Color)
     ccall(
         (:DrawTriangleFan, raylib_lib_path),
         Cvoid,
@@ -1703,7 +1894,7 @@ function DrawTriangleFan(points::Ptr{Vector2}, pointCount::Int, color::Color)
         color,
     )
 end
-function DrawTriangleStrip(points::Ptr{Vector2}, pointCount::Int, color::Color)
+function DrawTriangleStrip(points::Ptr{Vector2}, pointCount::Int64, color::Color)
     ccall(
         (:DrawTriangleStrip, raylib_lib_path),
         Cvoid,
@@ -1715,7 +1906,7 @@ function DrawTriangleStrip(points::Ptr{Vector2}, pointCount::Int, color::Color)
 end
 function DrawPoly(
     center::Vector2,
-    sides::Int,
+    sides::Int64,
     radius::Float64,
     rotation::Float64,
     color::Color,
@@ -1733,7 +1924,7 @@ function DrawPoly(
 end
 function DrawPolyLines(
     center::Vector2,
-    sides::Int,
+    sides::Int64,
     radius::Float64,
     rotation::Float64,
     color::Color,
@@ -1751,7 +1942,7 @@ function DrawPolyLines(
 end
 function DrawPolyLinesEx(
     center::Vector2,
-    sides::Int,
+    sides::Int64,
     radius::Float64,
     rotation::Float64,
     lineThick::Float64,
@@ -1852,7 +2043,7 @@ function CheckCollisionLines(
         collisionPoint,
     )
 end
-function CheckCollisionPointLine(point::Vector2, p1::Vector2, p2::Vector2, threshold::Int)
+function CheckCollisionPointLine(point::Vector2, p1::Vector2, p2::Vector2, threshold::Int64)
     return ccall(
         (:CheckCollisionPointLine, raylib_lib_path),
         Bool,
@@ -1873,19 +2064,19 @@ function GetCollisionRec(rec1::Rectangle, rec2::Rectangle)
     )
 end
 function LoadImage(fileName::String)
-    return ccall((:LoadImage, raylib_lib_path), Image, (Cstring,), fileName)
+    return ccall((:LoadImage, raylib_lib_path), Image, (Ptr{Cchar},), fileName)
 end
 function LoadImageRaw(
     fileName::String,
-    width::Int,
-    height::Int,
-    format::Int,
-    headerSize::Int,
+    width::Int64,
+    height::Int64,
+    format::Int64,
+    headerSize::Int64,
 )
     return ccall(
         (:LoadImageRaw, raylib_lib_path),
         Image,
-        (Cstring, Cint, Cint, Cint, Cint),
+        (Ptr{Cchar}, Cint, Cint, Cint, Cint),
         fileName,
         width,
         height,
@@ -1893,20 +2084,20 @@ function LoadImageRaw(
         headerSize,
     )
 end
-function LoadImageAnim(fileName::String, frames::Ptr{Cint})
+function LoadImageAnim(fileName::String, frames::Ptr{Int64})
     return ccall(
         (:LoadImageAnim, raylib_lib_path),
         Image,
-        (Cstring, Ptr{Cint}),
+        (Ptr{Cchar}, Ptr{Cint}),
         fileName,
         frames,
     )
 end
-function LoadImageFromMemory(fileType::String, fileData::Ptr{Cuchar}, dataSize::Int)
+function LoadImageFromMemory(fileType::String, fileData::Ptr{Cuchar}, dataSize::Int64)
     return ccall(
         (:LoadImageFromMemory, raylib_lib_path),
         Image,
-        (Cstring, Ptr{Cuchar}, Cint),
+        (Ptr{Cchar}, Ptr{Cuchar}, Cint),
         fileType,
         fileData,
         dataSize,
@@ -1922,18 +2113,24 @@ function UnloadImage(image::Image)
     ccall((:UnloadImage, raylib_lib_path), Cvoid, (Image,), image)
 end
 function ExportImage(image::Image, fileName::String)
-    return ccall((:ExportImage, raylib_lib_path), Bool, (Image, Cstring), image, fileName)
+    return ccall(
+        (:ExportImage, raylib_lib_path),
+        Bool,
+        (Image, Ptr{Cchar}),
+        image,
+        fileName,
+    )
 end
 function ExportImageAsCode(image::Image, fileName::String)
     return ccall(
         (:ExportImageAsCode, raylib_lib_path),
         Bool,
-        (Image, Cstring),
+        (Image, Ptr{Cchar}),
         image,
         fileName,
     )
 end
-function GenImageColor(width::Int, height::Int, color::Color)
+function GenImageColor(width::Int64, height::Int64, color::Color)
     return ccall(
         (:GenImageColor, raylib_lib_path),
         Image,
@@ -1943,7 +2140,7 @@ function GenImageColor(width::Int, height::Int, color::Color)
         color,
     )
 end
-function GenImageGradientV(width::Int, height::Int, top::Color, bottom::Color)
+function GenImageGradientV(width::Int64, height::Int64, top::Color, bottom::Color)
     return ccall(
         (:GenImageGradientV, raylib_lib_path),
         Image,
@@ -1954,7 +2151,7 @@ function GenImageGradientV(width::Int, height::Int, top::Color, bottom::Color)
         bottom,
     )
 end
-function GenImageGradientH(width::Int, height::Int, left::Color, right::Color)
+function GenImageGradientH(width::Int64, height::Int64, left::Color, right::Color)
     return ccall(
         (:GenImageGradientH, raylib_lib_path),
         Image,
@@ -1966,8 +2163,8 @@ function GenImageGradientH(width::Int, height::Int, left::Color, right::Color)
     )
 end
 function GenImageGradientRadial(
-    width::Int,
-    height::Int,
+    width::Int64,
+    height::Int64,
     density::Float64,
     inner::Color,
     outer::Color,
@@ -1984,10 +2181,10 @@ function GenImageGradientRadial(
     )
 end
 function GenImageChecked(
-    width::Int,
-    height::Int,
-    checksX::Int,
-    checksY::Int,
+    width::Int64,
+    height::Int64,
+    checksX::Int64,
+    checksY::Int64,
     col1::Color,
     col2::Color,
 )
@@ -2003,7 +2200,7 @@ function GenImageChecked(
         col2,
     )
 end
-function GenImageWhiteNoise(width::Int, height::Int, factor::Float64)
+function GenImageWhiteNoise(width::Int64, height::Int64, factor::Float64)
     return ccall(
         (:GenImageWhiteNoise, raylib_lib_path),
         Image,
@@ -2013,7 +2210,7 @@ function GenImageWhiteNoise(width::Int, height::Int, factor::Float64)
         factor,
     )
 end
-function GenImageCellular(width::Int, height::Int, tileSize::Int)
+function GenImageCellular(width::Int64, height::Int64, tileSize::Int64)
     return ccall(
         (:GenImageCellular, raylib_lib_path),
         Image,
@@ -2029,11 +2226,11 @@ end
 function ImageFromImage(image::Image, rec::Rectangle)
     return ccall((:ImageFromImage, raylib_lib_path), Image, (Image, Rectangle), image, rec)
 end
-function ImageText(text::String, fontSize::Int, color::Color)
+function ImageText(text::String, fontSize::Int64, color::Color)
     return ccall(
         (:ImageText, raylib_lib_path),
         Image,
-        (Cstring, Cint, Color),
+        (Ptr{Cchar}, Cint, Color),
         text,
         fontSize,
         color,
@@ -2049,7 +2246,7 @@ function ImageTextEx(
     return ccall(
         (:ImageTextEx, raylib_lib_path),
         Image,
-        (Font, Cstring, Cfloat, Cfloat, Color),
+        (Font, Ptr{Cchar}, Cfloat, Cfloat, Color),
         font,
         text,
         fontSize,
@@ -2057,7 +2254,7 @@ function ImageTextEx(
         tint,
     )
 end
-function ImageFormat(image::Ptr{Image}, newFormat::Int)
+function ImageFormat(image::Ptr{Image}, newFormat::Int64)
     ccall((:ImageFormat, raylib_lib_path), Cvoid, (Ptr{Image}, Cint), image, newFormat)
 end
 function ImageToPOT(image::Ptr{Image}, fill::Color)
@@ -2085,7 +2282,7 @@ end
 function ImageAlphaPremultiply(image::Ptr{Image})
     ccall((:ImageAlphaPremultiply, raylib_lib_path), Cvoid, (Ptr{Image},), image)
 end
-function ImageResize(image::Ptr{Image}, newWidth::Int, newHeight::Int)
+function ImageResize(image::Ptr{Image}, newWidth::Int64, newHeight::Int64)
     ccall(
         (:ImageResize, raylib_lib_path),
         Cvoid,
@@ -2095,7 +2292,7 @@ function ImageResize(image::Ptr{Image}, newWidth::Int, newHeight::Int)
         newHeight,
     )
 end
-function ImageResizeNN(image::Ptr{Image}, newWidth::Int, newHeight::Int)
+function ImageResizeNN(image::Ptr{Image}, newWidth::Int64, newHeight::Int64)
     ccall(
         (:ImageResizeNN, raylib_lib_path),
         Cvoid,
@@ -2107,10 +2304,10 @@ function ImageResizeNN(image::Ptr{Image}, newWidth::Int, newHeight::Int)
 end
 function ImageResizeCanvas(
     image::Ptr{Image},
-    newWidth::Int,
-    newHeight::Int,
-    offsetX::Int,
-    offsetY::Int,
+    newWidth::Int64,
+    newHeight::Int64,
+    offsetX::Int64,
+    offsetY::Int64,
     fill::Color,
 )
     ccall(
@@ -2128,7 +2325,7 @@ end
 function ImageMipmaps(image::Ptr{Image})
     ccall((:ImageMipmaps, raylib_lib_path), Cvoid, (Ptr{Image},), image)
 end
-function ImageDither(image::Ptr{Image}, rBpp::Int, gBpp::Int, bBpp::Int, aBpp::Int)
+function ImageDither(image::Ptr{Image}, rBpp::Int64, gBpp::Int64, bBpp::Int64, aBpp::Int64)
     ccall(
         (:ImageDither, raylib_lib_path),
         Cvoid,
@@ -2170,7 +2367,7 @@ function ImageColorContrast(image::Ptr{Image}, contrast::Float64)
         contrast,
     )
 end
-function ImageColorBrightness(image::Ptr{Image}, brightness::Int)
+function ImageColorBrightness(image::Ptr{Image}, brightness::Int64)
     ccall(
         (:ImageColorBrightness, raylib_lib_path),
         Cvoid,
@@ -2192,7 +2389,7 @@ end
 function LoadImageColors(image::Image)
     return ccall((:LoadImageColors, raylib_lib_path), Ptr{Color}, (Image,), image)
 end
-function LoadImagePalette(image::Image, maxPaletteSize::Int, colorCount::Ptr{Cint})
+function LoadImagePalette(image::Image, maxPaletteSize::Int64, colorCount::Ptr{Int64})
     return ccall(
         (:LoadImagePalette, raylib_lib_path),
         Ptr{Color},
@@ -2217,13 +2414,13 @@ function GetImageAlphaBorder(image::Image, threshold::Float64)
         threshold,
     )
 end
-function GetImageColor(image::Image, x::Int, y::Int)
+function GetImageColor(image::Image, x::Int64, y::Int64)
     return ccall((:GetImageColor, raylib_lib_path), Color, (Image, Cint, Cint), image, x, y)
 end
 function ImageClearBackground(dst::Ptr{Image}, color::Color)
     ccall((:ImageClearBackground, raylib_lib_path), Cvoid, (Ptr{Image}, Color), dst, color)
 end
-function ImageDrawPixel(dst::Ptr{Image}, posX::Int, posY::Int, color::Color)
+function ImageDrawPixel(dst::Ptr{Image}, posX::Int64, posY::Int64, color::Color)
     ccall(
         (:ImageDrawPixel, raylib_lib_path),
         Cvoid,
@@ -2246,10 +2443,10 @@ function ImageDrawPixelV(dst::Ptr{Image}, position::Vector2, color::Color)
 end
 function ImageDrawLine(
     dst::Ptr{Image},
-    startPosX::Int,
-    startPosY::Int,
-    endPosX::Int,
-    endPosY::Int,
+    startPosX::Int64,
+    startPosY::Int64,
+    endPosX::Int64,
+    endPosY::Int64,
     color::Color,
 )
     ccall(
@@ -2277,9 +2474,9 @@ function ImageDrawLineV(dst::Ptr{Image}, start::Vector2, end_val::Vector2, color
 end
 function ImageDrawCircle(
     dst::Ptr{Image},
-    centerX::Int,
-    centerY::Int,
-    radius::Int,
+    centerX::Int64,
+    centerY::Int64,
+    radius::Int64,
     color::Color,
 )
     ccall(
@@ -2293,7 +2490,7 @@ function ImageDrawCircle(
         color,
     )
 end
-function ImageDrawCircleV(dst::Ptr{Image}, center::Vector2, radius::Int, color::Color)
+function ImageDrawCircleV(dst::Ptr{Image}, center::Vector2, radius::Int64, color::Color)
     ccall(
         (:ImageDrawCircleV, raylib_lib_path),
         Cvoid,
@@ -2306,10 +2503,10 @@ function ImageDrawCircleV(dst::Ptr{Image}, center::Vector2, radius::Int, color::
 end
 function ImageDrawRectangle(
     dst::Ptr{Image},
-    posX::Int,
-    posY::Int,
-    width::Int,
-    height::Int,
+    posX::Int64,
+    posY::Int64,
+    width::Int64,
+    height::Int64,
     color::Color,
 )
     ccall(
@@ -2350,7 +2547,12 @@ function ImageDrawRectangleRec(dst::Ptr{Image}, rec::Rectangle, color::Color)
         color,
     )
 end
-function ImageDrawRectangleLines(dst::Ptr{Image}, rec::Rectangle, thick::Int, color::Color)
+function ImageDrawRectangleLines(
+    dst::Ptr{Image},
+    rec::Rectangle,
+    thick::Int64,
+    color::Color,
+)
     ccall(
         (:ImageDrawRectangleLines, raylib_lib_path),
         Cvoid,
@@ -2382,15 +2584,15 @@ end
 function ImageDrawText(
     dst::Ptr{Image},
     text::String,
-    posX::Int,
-    posY::Int,
-    fontSize::Int,
+    posX::Int64,
+    posY::Int64,
+    fontSize::Int64,
     color::Color,
 )
     ccall(
         (:ImageDrawText, raylib_lib_path),
         Cvoid,
-        (Ptr{Image}, Cstring, Cint, Cint, Cint, Color),
+        (Ptr{Image}, Ptr{Cchar}, Cint, Cint, Cint, Color),
         dst,
         text,
         posX,
@@ -2411,7 +2613,7 @@ function ImageDrawTextEx(
     ccall(
         (:ImageDrawTextEx, raylib_lib_path),
         Cvoid,
-        (Ptr{Image}, Font, Cstring, Vector2, Cfloat, Cfloat, Color),
+        (Ptr{Image}, Font, Ptr{Cchar}, Vector2, Cfloat, Cfloat, Color),
         dst,
         font,
         text,
@@ -2422,12 +2624,12 @@ function ImageDrawTextEx(
     )
 end
 function LoadTexture(fileName::String)
-    return ccall((:LoadTexture, raylib_lib_path), Texture, (Cstring,), fileName)
+    return ccall((:LoadTexture, raylib_lib_path), Texture, (Ptr{Cchar},), fileName)
 end
 function LoadTextureFromImage(image::Image)
     return ccall((:LoadTextureFromImage, raylib_lib_path), Texture, (Image,), image)
 end
-function LoadTextureCubemap(image::Image, layout::Int)
+function LoadTextureCubemap(image::Image, layout::Int64)
     return ccall(
         (:LoadTextureCubemap, raylib_lib_path),
         Texture,
@@ -2436,7 +2638,7 @@ function LoadTextureCubemap(image::Image, layout::Int)
         layout,
     )
 end
-function LoadRenderTexture(width::Int, height::Int)
+function LoadRenderTexture(width::Int64, height::Int64)
     return ccall(
         (:LoadRenderTexture, raylib_lib_path),
         RenderTexture,
@@ -2467,13 +2669,13 @@ end
 function GenTextureMipmaps(texture::Ptr{Texture})
     ccall((:GenTextureMipmaps, raylib_lib_path), Cvoid, (Ptr{Texture},), texture)
 end
-function SetTextureFilter(texture::Texture, filter::Int)
+function SetTextureFilter(texture::Texture, filter::Int64)
     ccall((:SetTextureFilter, raylib_lib_path), Cvoid, (Texture, Cint), texture, filter)
 end
-function SetTextureWrap(texture::Texture, wrap::Int)
+function SetTextureWrap(texture::Texture, wrap::Int64)
     ccall((:SetTextureWrap, raylib_lib_path), Cvoid, (Texture, Cint), texture, wrap)
 end
-function DrawTexture(texture::Texture, posX::Int, posY::Int, tint::Color)
+function DrawTexture(texture::Texture, posX::Int64, posY::Int64, tint::Color)
     ccall(
         (:DrawTexture, raylib_lib_path),
         Cvoid,
@@ -2608,7 +2810,7 @@ function DrawTexturePoly(
     center::Vector2,
     points::Ptr{Vector2},
     texcoords::Ptr{Vector2},
-    pointCount::Int,
+    pointCount::Int64,
     tint::Color,
 )
     ccall(
@@ -2664,7 +2866,7 @@ end
 function GetColor(hexValue::Cuint)
     return ccall((:GetColor, raylib_lib_path), Color, (Cuint,), hexValue)
 end
-function GetPixelColor(srcPtr::Ptr{Cvoid}, format::Int)
+function GetPixelColor(srcPtr::Ptr{Cvoid}, format::Int64)
     return ccall(
         (:GetPixelColor, raylib_lib_path),
         Color,
@@ -2673,7 +2875,7 @@ function GetPixelColor(srcPtr::Ptr{Cvoid}, format::Int)
         format,
     )
 end
-function SetPixelColor(dstPtr::Ptr{Cvoid}, color::Color, format::Int)
+function SetPixelColor(dstPtr::Ptr{Cvoid}, color::Color, format::Int64)
     ccall(
         (:SetPixelColor, raylib_lib_path),
         Cvoid,
@@ -2683,7 +2885,7 @@ function SetPixelColor(dstPtr::Ptr{Cvoid}, color::Color, format::Int)
         format,
     )
 end
-function GetPixelDataSize(width::Int, height::Int, format::Int)
+function GetPixelDataSize(width::Int64, height::Int64, format::Int64)
     return ccall(
         (:GetPixelDataSize, raylib_lib_path),
         Cint,
@@ -2697,20 +2899,25 @@ function GetFontDefault()
     return ccall((:GetFontDefault, raylib_lib_path), Font, ())
 end
 function LoadFont(fileName::String)
-    return ccall((:LoadFont, raylib_lib_path), Font, (Cstring,), fileName)
+    return ccall((:LoadFont, raylib_lib_path), Font, (Ptr{Cchar},), fileName)
 end
-function LoadFontEx(fileName::String, fontSize::Int, fontChars::Ptr{Cint}, glyphCount::Int)
+function LoadFontEx(
+    fileName::String,
+    fontSize::Int64,
+    fontChars::Ptr{Int64},
+    glyphCount::Int64,
+)
     return ccall(
         (:LoadFontEx, raylib_lib_path),
         Font,
-        (Cstring, Cint, Ptr{Cint}, Cint),
+        (Ptr{Cchar}, Cint, Ptr{Cint}, Cint),
         fileName,
         fontSize,
         fontChars,
         glyphCount,
     )
 end
-function LoadFontFromImage(image::Image, key::Color, firstChar::Int)
+function LoadFontFromImage(image::Image, key::Color, firstChar::Int64)
     return ccall(
         (:LoadFontFromImage, raylib_lib_path),
         Font,
@@ -2723,15 +2930,15 @@ end
 function LoadFontFromMemory(
     fileType::String,
     fileData::Ptr{Cuchar},
-    dataSize::Int,
-    fontSize::Int,
-    fontChars::Ptr{Cint},
-    glyphCount::Int,
+    dataSize::Int64,
+    fontSize::Int64,
+    fontChars::Ptr{Int64},
+    glyphCount::Int64,
 )
     return ccall(
         (:LoadFontFromMemory, raylib_lib_path),
         Font,
-        (Cstring, Ptr{Cuchar}, Cint, Cint, Ptr{Cint}, Cint),
+        (Ptr{Cchar}, Ptr{Cuchar}, Cint, Cint, Ptr{Cint}, Cint),
         fileType,
         fileData,
         dataSize,
@@ -2742,11 +2949,11 @@ function LoadFontFromMemory(
 end
 function LoadFontData(
     fileData::Ptr{Cuchar},
-    dataSize::Int,
-    fontSize::Int,
-    fontChars::Ptr{Cint},
-    glyphCount::Int,
-    type::Int,
+    dataSize::Int64,
+    fontSize::Int64,
+    fontChars::Ptr{Int64},
+    glyphCount::Int64,
+    type::Int64,
 )
     return ccall(
         (:LoadFontData, raylib_lib_path),
@@ -2763,10 +2970,10 @@ end
 function GenImageFontAtlas(
     chars::Ptr{GlyphInfo},
     recs::Ptr{Ptr{Rectangle}},
-    glyphCount::Int,
-    fontSize::Int,
-    padding::Int,
-    packMethod::Int,
+    glyphCount::Int64,
+    fontSize::Int64,
+    padding::Int64,
+    packMethod::Int64,
 )
     return ccall(
         (:GenImageFontAtlas, raylib_lib_path),
@@ -2780,7 +2987,7 @@ function GenImageFontAtlas(
         packMethod,
     )
 end
-function UnloadFontData(chars::Ptr{GlyphInfo}, glyphCount::Int)
+function UnloadFontData(chars::Ptr{GlyphInfo}, glyphCount::Int64)
     ccall(
         (:UnloadFontData, raylib_lib_path),
         Cvoid,
@@ -2792,14 +2999,23 @@ end
 function UnloadFont(font::Font)
     ccall((:UnloadFont, raylib_lib_path), Cvoid, (Font,), font)
 end
-function DrawFPS(posX::Int, posY::Int)
+function ExportFontAsCode(font::Font, fileName::String)
+    return ccall(
+        (:ExportFontAsCode, raylib_lib_path),
+        Bool,
+        (Font, Ptr{Cchar}),
+        font,
+        fileName,
+    )
+end
+function DrawFPS(posX::Int64, posY::Int64)
     ccall((:DrawFPS, raylib_lib_path), Cvoid, (Cint, Cint), posX, posY)
 end
-function DrawText(text::String, posX::Int, posY::Int, fontSize::Int, color::Color)
+function DrawText(text::String, posX::Int64, posY::Int64, fontSize::Int64, color::Color)
     ccall(
         (:DrawText, raylib_lib_path),
         Cvoid,
-        (Cstring, Cint, Cint, Cint, Color),
+        (Ptr{Cchar}, Cint, Cint, Cint, Color),
         text,
         posX,
         posY,
@@ -2818,7 +3034,7 @@ function DrawTextEx(
     ccall(
         (:DrawTextEx, raylib_lib_path),
         Cvoid,
-        (Font, Cstring, Vector2, Cfloat, Cfloat, Color),
+        (Font, Ptr{Cchar}, Vector2, Cfloat, Cfloat, Color),
         font,
         text,
         position,
@@ -2840,7 +3056,7 @@ function DrawTextPro(
     ccall(
         (:DrawTextPro, raylib_lib_path),
         Cvoid,
-        (Font, Cstring, Vector2, Vector2, Cfloat, Cfloat, Cfloat, Color),
+        (Font, Ptr{Cchar}, Vector2, Vector2, Cfloat, Cfloat, Cfloat, Color),
         font,
         text,
         position,
@@ -2853,7 +3069,7 @@ function DrawTextPro(
 end
 function DrawTextCodepoint(
     font::Font,
-    codepoint::Int,
+    codepoint::Int64,
     position::Vector2,
     fontSize::Float64,
     tint::Color,
@@ -2869,27 +3085,49 @@ function DrawTextCodepoint(
         tint,
     )
 end
-function MeasureText(text::String, fontSize::Int)
-    return ccall((:MeasureText, raylib_lib_path), Cint, (Cstring, Cint), text, fontSize)
+function DrawTextCodepoints(
+    font::Font,
+    codepoints::Ptr{Int64},
+    count::Int64,
+    position::Vector2,
+    fontSize::Float64,
+    spacing::Float64,
+    tint::Color,
+)
+    ccall(
+        (:DrawTextCodepoints, raylib_lib_path),
+        Cvoid,
+        (Font, Ptr{Cint}, Cint, Vector2, Cfloat, Cfloat, Color),
+        font,
+        codepoints,
+        count,
+        position,
+        fontSize,
+        spacing,
+        tint,
+    )
+end
+function MeasureText(text::String, fontSize::Int64)
+    return ccall((:MeasureText, raylib_lib_path), Cint, (Ptr{Cchar}, Cint), text, fontSize)
 end
 function MeasureTextEx(font::Font, text::String, fontSize::Float64, spacing::Float64)
     return ccall(
         (:MeasureTextEx, raylib_lib_path),
         Vector2,
-        (Font, Cstring, Cfloat, Cfloat),
+        (Font, Ptr{Cchar}, Cfloat, Cfloat),
         font,
         text,
         fontSize,
         spacing,
     )
 end
-function GetGlyphIndex(font::Font, codepoint::Int)
+function GetGlyphIndex(font::Font, codepoint::Int64)
     return ccall((:GetGlyphIndex, raylib_lib_path), Cint, (Font, Cint), font, codepoint)
 end
-function GetGlyphInfo(font::Font, codepoint::Int)
+function GetGlyphInfo(font::Font, codepoint::Int64)
     return ccall((:GetGlyphInfo, raylib_lib_path), GlyphInfo, (Font, Cint), font, codepoint)
 end
-function GetGlyphAtlasRec(font::Font, codepoint::Int)
+function GetGlyphAtlasRec(font::Font, codepoint::Int64)
     return ccall(
         (:GetGlyphAtlasRec, raylib_lib_path),
         Rectangle,
@@ -2898,62 +3136,68 @@ function GetGlyphAtlasRec(font::Font, codepoint::Int)
         codepoint,
     )
 end
-function LoadCodepoints(text::String, count::Ptr{Cint})
+function LoadCodepoints(text::String, count::Ptr{Int64})
     return ccall(
         (:LoadCodepoints, raylib_lib_path),
         Ptr{Cint},
-        (Cstring, Ptr{Cint}),
+        (Ptr{Cchar}, Ptr{Cint}),
         text,
         count,
     )
 end
-function UnloadCodepoints(codepoints::Ptr{Cint})
+function UnloadCodepoints(codepoints::Ptr{Int64})
     ccall((:UnloadCodepoints, raylib_lib_path), Cvoid, (Ptr{Cint},), codepoints)
 end
 function GetCodepointCount(text::String)
-    return ccall((:GetCodepointCount, raylib_lib_path), Cint, (Cstring,), text)
+    return ccall((:GetCodepointCount, raylib_lib_path), Cint, (Ptr{Cchar},), text)
 end
-function GetCodepoint(text::String, bytesProcessed::Ptr{Cint})
+function GetCodepoint(text::String, bytesProcessed::Ptr{Int64})
     return ccall(
         (:GetCodepoint, raylib_lib_path),
         Cint,
-        (Cstring, Ptr{Cint}),
+        (Ptr{Cchar}, Ptr{Cint}),
         text,
         bytesProcessed,
     )
 end
-function CodepointToUTF8(codepoint::Int, byteSize::Ptr{Cint})
+function CodepointToUTF8(codepoint::Int64, byteSize::Ptr{Int64})
     return ccall(
         (:CodepointToUTF8, raylib_lib_path),
-        Cstring,
+        Ptr{Cchar},
         (Cint, Ptr{Cint}),
         codepoint,
         byteSize,
     )
 end
-function TextCodepointsToUTF8(codepoints::Ptr{Cint}, length::Int)
+function TextCodepointsToUTF8(codepoints::Ptr{Int64}, length::Int64)
     return ccall(
         (:TextCodepointsToUTF8, raylib_lib_path),
-        Cstring,
+        Ptr{Cchar},
         (Ptr{Cint}, Cint),
         codepoints,
         length,
     )
 end
 function TextCopy(dst::String, src::String)
-    return ccall((:TextCopy, raylib_lib_path), Cint, (Cstring, Cstring), dst, src)
+    return ccall((:TextCopy, raylib_lib_path), Cint, (Ptr{Cchar}, Ptr{Cchar}), dst, src)
 end
 function TextIsEqual(text1::String, text2::String)
-    return ccall((:TextIsEqual, raylib_lib_path), Bool, (Cstring, Cstring), text1, text2)
+    return ccall(
+        (:TextIsEqual, raylib_lib_path),
+        Bool,
+        (Ptr{Cchar}, Ptr{Cchar}),
+        text1,
+        text2,
+    )
 end
 function TextLength(text::String)
-    return ccall((:TextLength, raylib_lib_path), Cuint, (Cstring,), text)
+    return ccall((:TextLength, raylib_lib_path), Cuint, (Ptr{Cchar},), text)
 end
-function TextSubtext(text::String, position::Int, length::Int)
+function TextSubtext(text::String, position::Int64, length::Int64)
     return ccall(
         (:TextSubtext, raylib_lib_path),
-        Cstring,
-        (Cstring, Cint, Cint),
+        Ptr{Cchar},
+        (Ptr{Cchar}, Cint, Cint),
         text,
         position,
         length,
@@ -2962,67 +3206,73 @@ end
 function TextReplace(text::String, replace::String, by::String)
     return ccall(
         (:TextReplace, raylib_lib_path),
-        Cstring,
-        (Cstring, Cstring, Cstring),
+        Ptr{Cchar},
+        (Ptr{Cchar}, Ptr{Cchar}, Ptr{Cchar}),
         text,
         replace,
         by,
     )
 end
-function TextInsert(text::String, insert::String, position::Int)
+function TextInsert(text::String, insert::String, position::Int64)
     return ccall(
         (:TextInsert, raylib_lib_path),
-        Cstring,
-        (Cstring, Cstring, Cint),
+        Ptr{Cchar},
+        (Ptr{Cchar}, Ptr{Cchar}, Cint),
         text,
         insert,
         position,
     )
 end
-function TextJoin(textList::String, count::Int, delimiter::String)
+function TextJoin(textList::Ptr{String}, count::Int64, delimiter::String)
     return ccall(
         (:TextJoin, raylib_lib_path),
-        Cstring,
-        (Cstring, Cint, Cstring),
+        Ptr{Cchar},
+        (Ptr{Ptr{Cchar}}, Cint, Ptr{Cchar}),
         textList,
         count,
         delimiter,
     )
 end
-function TextSplit(text::String, delimiter::Cchar, count::Ptr{Cint})
+function TextSplit(text::String, delimiter::Cchar, count::Ptr{Int64})
     return ccall(
         (:TextSplit, raylib_lib_path),
-        Cstring,
-        (Cstring, Cchar, Ptr{Cint}),
+        Ptr{Ptr{Cchar}},
+        (Ptr{Cchar}, Cchar, Ptr{Cint}),
         text,
         delimiter,
         count,
     )
 end
-function TextAppend(text::String, append::String, position::Ptr{Cint})
+function TextAppend(text::String, append::String, position::Ptr{Int64})
     ccall(
         (:TextAppend, raylib_lib_path),
         Cvoid,
-        (Cstring, Cstring, Ptr{Cint}),
+        (Ptr{Cchar}, Ptr{Cchar}, Ptr{Cint}),
         text,
         append,
         position,
     )
 end
 function TextFindIndex(text::String, find::String)
-    return ccall((:TextFindIndex, raylib_lib_path), Cint, (Cstring, Cstring), text, find)
+    return ccall(
+        (:TextFindIndex, raylib_lib_path),
+        Cint,
+        (Ptr{Cchar}, Ptr{Cchar}),
+        text,
+        find,
+    )
 end
 function TextToUpper(text::String)
-    return ccall((:TextToUpper, raylib_lib_path), Cstring, (Cstring,), text)
+    return ccall((:TextToUpper, raylib_lib_path), Ptr{Cchar}, (Ptr{Cchar},), text)
 end
 function TextToLower(text::String)
-    return ccall((:TextToLower, raylib_lib_path), Cstring, (Cstring,), text)
+    return ccall((:TextToLower, raylib_lib_path), Ptr{Cchar}, (Ptr{Cchar},), text)
 end
 function TextToPascal(text::String)
-    return ccall((:TextToPascal, raylib_lib_path), Cstring, (Cstring,), text)
+    return ccall((:TextToPascal, raylib_lib_path), Ptr{Cchar}, (Ptr{Cchar},), text)
 end
 function TextToInteger(text::String)
-    return ccall((:TextToInteger, raylib_lib_path), Cint, (Cstring,), text)
+    return ccall((:TextToInteger, raylib_lib_path), Cint, (Ptr{Cchar},), text)
 end
 function DrawLine3D(startPos::Vector3, endPos::Vector3, color::Color)
     ccall(
@@ -3066,7 +3316,7 @@ function DrawTriangle3D(v1::Vector3, v2::Vector3, v3::Vector3, color::Color)
         color,
     )
 end
-function DrawTriangleStrip3D(points::Ptr{Vector3}, pointCount::Int, color::Color)
+function DrawTriangleStrip3D(points::Ptr{Vector3}, pointCount::Int64, color::Color)
     ccall(
         (:DrawTriangleStrip3D, raylib_lib_path),
         Cvoid,
@@ -3187,8 +3437,8 @@ end
 function DrawSphereEx(
     centerPos::Vector3,
     radius::Float64,
-    rings::Int,
-    slices::Int,
+    rings::Int64,
+    slices::Int64,
     color::Color,
 )
     ccall(
@@ -3205,8 +3455,8 @@ end
 function DrawSphereWires(
     centerPos::Vector3,
     radius::Float64,
-    rings::Int,
-    slices::Int,
+    rings::Int64,
+    slices::Int64,
     color::Color,
 )
     ccall(
@@ -3225,7 +3475,7 @@ function DrawCylinder(
     radiusTop::Float64,
     radiusBottom::Float64,
     height::Float64,
-    slices::Int,
+    slices::Int64,
     color::Color,
 )
     ccall(
@@ -3245,7 +3495,7 @@ function DrawCylinderEx(
     endPos::Vector3,
     startRadius::Float64,
     endRadius::Float64,
-    sides::Int,
+    sides::Int64,
     color::Color,
 )
     ccall(
@@ -3265,7 +3515,7 @@ function DrawCylinderWires(
     radiusTop::Float64,
     radiusBottom::Float64,
     height::Float64,
-    slices::Int,
+    slices::Int64,
     color::Color,
 )
     ccall(
@@ -3285,7 +3535,7 @@ function DrawCylinderWiresEx(
     endPos::Vector3,
     startRadius::Float64,
     endRadius::Float64,
-    sides::Int,
+    sides::Int64,
     color::Color,
 )
     ccall(
@@ -3313,11 +3563,11 @@ end
 function DrawRay(ray::Ray, color::Color)
     ccall((:DrawRay, raylib_lib_path), Cvoid, (Ray, Color), ray, color)
 end
-function DrawGrid(slices::Int, spacing::Float64)
+function DrawGrid(slices::Int64, spacing::Float64)
     ccall((:DrawGrid, raylib_lib_path), Cvoid, (Cint, Cfloat), slices, spacing)
 end
 function LoadModel(fileName::String)
-    return ccall((:LoadModel, raylib_lib_path), Model, (Cstring,), fileName)
+    return ccall((:LoadModel, raylib_lib_path), Model, (Ptr{Cchar},), fileName)
 end
 function LoadModelFromMesh(mesh::Mesh)
     return ccall((:LoadModelFromMesh, raylib_lib_path), Model, (Mesh,), mesh)
@@ -3465,10 +3715,10 @@ function UploadMesh(mesh::Ptr{Mesh}, dynamic::Bool)
 end
 function UpdateMeshBuffer(
     mesh::Mesh,
-    index::Int,
+    index::Int64,
     data::Ptr{Cvoid},
-    dataSize::Int,
-    offset::Int,
+    dataSize::Int64,
+    offset::Int64,
 )
     ccall(
         (:UpdateMeshBuffer, raylib_lib_path),
@@ -3498,7 +3748,7 @@ function DrawMeshInstanced(
     mesh::Mesh,
     material::Material,
     transforms::Ptr{GLMatrix},
-    instances::Int,
+    instances::Int64,
 )
     ccall(
         (:DrawMeshInstanced, raylib_lib_path),
@@ -3511,7 +3761,7 @@ function DrawMeshInstanced(
     )
 end
 function ExportMesh(mesh::Mesh, fileName::String)
-    return ccall((:ExportMesh, raylib_lib_path), Bool, (Mesh, Cstring), mesh, fileName)
+    return ccall((:ExportMesh, raylib_lib_path), Bool, (Mesh, Ptr{Cchar}), mesh, fileName)
 end
 function GetMeshBoundingBox(mesh::Mesh)
     return ccall((:GetMeshBoundingBox, raylib_lib_path), BoundingBox, (Mesh,), mesh)
@@ -3519,13 +3769,10 @@ end
 function GenMeshTangents(mesh::Ptr{Mesh})
     ccall((:GenMeshTangents, raylib_lib_path), Cvoid, (Ptr{Mesh},), mesh)
 end
-function GenMeshBinormals(mesh::Ptr{Mesh})
-    ccall((:GenMeshBinormals, raylib_lib_path), Cvoid, (Ptr{Mesh},), mesh)
-end
-function GenMeshPoly(sides::Int, radius::Float64)
+function GenMeshPoly(sides::Int64, radius::Float64)
     return ccall((:GenMeshPoly, raylib_lib_path), Mesh, (Cint, Cfloat), sides, radius)
 end
-function GenMeshPlane(width::Float64, length::Float64, resX::Int, resZ::Int)
+function GenMeshPlane(width::Float64, length::Float64, resX::Int64, resZ::Int64)
     return ccall(
         (:GenMeshPlane, raylib_lib_path),
         Mesh,
@@ -3546,7 +3793,7 @@ function GenMeshCube(width::Float64, height::Float64, length::Float64)
         length,
     )
 end
-function GenMeshSphere(radius::Float64, rings::Int, slices::Int)
+function GenMeshSphere(radius::Float64, rings::Int64, slices::Int64)
     return ccall(
         (:GenMeshSphere, raylib_lib_path),
         Mesh,
@@ -3556,7 +3803,7 @@ function GenMeshSphere(radius::Float64, rings::Int, slices::Int)
         slices,
     )
 end
-function GenMeshHemiSphere(radius::Float64, rings::Int, slices::Int)
+function GenMeshHemiSphere(radius::Float64, rings::Int64, slices::Int64)
     return ccall(
         (:GenMeshHemiSphere, raylib_lib_path),
         Mesh,
@@ -3566,7 +3813,7 @@ function GenMeshHemiSphere(radius::Float64, rings::Int, slices::Int)
         slices,
     )
 end
-function GenMeshCylinder(radius::Float64, height::Float64, slices::Int)
+function GenMeshCylinder(radius::Float64, height::Float64, slices::Int64)
     return ccall(
         (:GenMeshCylinder, raylib_lib_path),
         Mesh,
@@ -3576,7 +3823,7 @@ function GenMeshCylinder(radius::Float64, height::Float64, slices::Int)
         slices,
     )
 end
-function GenMeshCone(radius::Float64, height::Float64, slices::Int)
+function GenMeshCone(radius::Float64, height::Float64, slices::Int64)
     return ccall(
         (:GenMeshCone, raylib_lib_path),
         Mesh,
@@ -3586,7 +3833,7 @@ function GenMeshCone(radius::Float64, height::Float64, slices::Int)
         slices,
     )
 end
-function GenMeshTorus(radius::Float64, size::Float64, radSeg::Int, sides::Int)
+function GenMeshTorus(radius::Float64, size::Float64, radSeg::Int64, sides::Int64)
     return ccall(
         (:GenMeshTorus, raylib_lib_path),
         Mesh,
@@ -3597,7 +3844,7 @@ function GenMeshTorus(radius::Float64, size::Float64, radSeg::Int, sides::Int)
         sides,
     )
 end
-function GenMeshKnot(radius::Float64, size::Float64, radSeg::Int, sides::Int)
+function GenMeshKnot(radius::Float64, size::Float64, radSeg::Int64, sides::Int64)
     return ccall(
         (:GenMeshKnot, raylib_lib_path),
         Mesh,
@@ -3626,11 +3873,11 @@ function GenMeshCubicmap(cubicmap::Image, cubeSize::Vector3)
         cubeSize,
     )
 end
-function LoadMaterials(fileName::String, materialCount::Ptr{Cint})
+function LoadMaterials(fileName::String, materialCount::Ptr{Int64})
     return ccall(
         (:LoadMaterials, raylib_lib_path),
         Ptr{Material},
-        (Cstring, Ptr{Cint}),
+        (Ptr{Cchar}, Ptr{Cint}),
         fileName,
         materialCount,
     )
@@ -3641,7 +3888,7 @@ end
 function UnloadMaterial(material::Material)
     ccall((:UnloadMaterial, raylib_lib_path), Cvoid, (Material,), material)
 end
-function SetMaterialTexture(material::Ptr{Material}, mapType::Int, texture::Texture)
+function SetMaterialTexture(material::Ptr{Material}, mapType::Int64, texture::Texture)
     ccall(
         (:SetMaterialTexture, raylib_lib_path),
         Cvoid,
@@ -3651,7 +3898,7 @@ function SetMaterialTexture(material::Ptr{Material}, mapType::Int, texture::Text
         texture,
     )
 end
-function SetModelMeshMaterial(model::Ptr{Model}, meshId::Int, materialId::Int)
+function SetModelMeshMaterial(model::Ptr{Model}, meshId::Int64, materialId::Int64)
     ccall(
         (:SetModelMeshMaterial, raylib_lib_path),
         Cvoid,
@@ -3665,12 +3912,12 @@ function LoadModelAnimations(fileName::String, animCount::Ptr{Cuint})
     return ccall(
         (:LoadModelAnimations, raylib_lib_path),
         Ptr{ModelAnimation},
-        (Cstring, Ptr{Cuint}),
+        (Ptr{Cchar}, Ptr{Cuint}),
         fileName,
         animCount,
     )
 end
-function UpdateModelAnimation(model::Model, anim::ModelAnimation, frame::Int)
+function UpdateModelAnimation(model::Model, anim::ModelAnimation, frame::Int64)
     ccall(
         (:UpdateModelAnimation, raylib_lib_path),
         Cvoid,
@@ -3755,15 +4002,6 @@ function GetRayCollisionBox(ray::Ray, box::BoundingBox)
         box,
     )
 end
-function GetRayCollisionModel(ray::Ray, model::Model)
-    return ccall(
-        (:GetRayCollisionModel, raylib_lib_path),
-        RayCollision,
-        (Ray, Model),
-        ray,
-        model,
-    )
-end
 function GetRayCollisionMesh(ray::Ray, mesh::Mesh, transform::GLMatrix)
     return ccall(
         (:GetRayCollisionMesh, raylib_lib_path),
@@ -3810,25 +4048,25 @@ function SetMasterVolume(volume::Float64)
     ccall((:SetMasterVolume, raylib_lib_path), Cvoid, (Cfloat,), volume)
 end
 function LoadWave(fileName::String)
-    return ccall((:LoadWave, raylib_lib_path), Wave, (Cstring,), fileName)
+    return ccall((:LoadWave, raylib_lib_path), Wave, (Ptr{Cchar},), fileName)
 end
-function LoadWaveFromMemory(fileType::String, fileData::Ptr{Cuchar}, dataSize::Int)
+function LoadWaveFromMemory(fileType::String, fileData::Ptr{Cuchar}, dataSize::Int64)
     return ccall(
         (:LoadWaveFromMemory, raylib_lib_path),
         Wave,
-        (Cstring, Ptr{Cuchar}, Cint),
+        (Ptr{Cchar}, Ptr{Cuchar}, Cint),
         fileType,
         fileData,
         dataSize,
     )
 end
 function LoadSound(fileName::String)
-    return ccall((:LoadSound, raylib_lib_path), Sound, (Cstring,), fileName)
+    return ccall((:LoadSound, raylib_lib_path), Sound, (Ptr{Cchar},), fileName)
 end
 function LoadSoundFromWave(wave::Wave)
     return ccall((:LoadSoundFromWave, raylib_lib_path), Sound, (Wave,), wave)
 end
-function UpdateSound(sound::Sound, data::Ptr{Cvoid}, sampleCount::Int)
+function UpdateSound(sound::Sound, data::Ptr{Cvoid}, sampleCount::Int64)
     ccall(
         (:UpdateSound, raylib_lib_path),
         Cvoid,
@@ -3845,13 +4083,13 @@ function UnloadSound(sound::Sound)
     ccall((:UnloadSound, raylib_lib_path), Cvoid, (Sound,), sound)
 end
 function ExportWave(wave::Wave, fileName::String)
-    return ccall((:ExportWave, raylib_lib_path), Bool, (Wave, Cstring), wave, fileName)
+    return ccall((:ExportWave, raylib_lib_path), Bool, (Wave, Ptr{Cchar}), wave, fileName)
 end
 function ExportWaveAsCode(wave::Wave, fileName::String)
     return ccall(
         (:ExportWaveAsCode, raylib_lib_path),
         Bool,
-        (Wave, Cstring),
+        (Wave, Ptr{Cchar}),
         wave,
         fileName,
     )
@@ -3886,7 +4124,23 @@ end
 function SetSoundPitch(sound::Sound, pitch::Float64)
     ccall((:SetSoundPitch, raylib_lib_path), Cvoid, (Sound, Cfloat), sound, pitch)
 end
-function WaveFormat(wave::Ptr{Wave}, sampleRate::Int, sampleSize::Int, channels::Int)
+function SetSoundPan(sound::Sound, pan::Float64)
+    ccall((:SetSoundPan, raylib_lib_path), Cvoid, (Sound, Cfloat), sound, pan)
+end
+function WaveCopy(wave::Wave)
+    return ccall((:WaveCopy, raylib_lib_path), Wave, (Wave,), wave)
+end
+function WaveCrop(wave::Ptr{Wave}, initSample::Int64, finalSample::Int64)
+    ccall(
+        (:WaveCrop, raylib_lib_path),
+        Cvoid,
+        (Ptr{Wave}, Cint, Cint),
+        wave,
+        initSample,
+        finalSample,
+    )
+end
+function WaveFormat(wave::Ptr{Wave}, sampleRate::Int64, sampleSize::Int64, channels::Int64)
     ccall(
         (:WaveFormat, raylib_lib_path),
         Cvoid,
@@ -3897,33 +4151,20 @@ function WaveFormat(wave::Ptr{Wave}, sampleRate::Int, sampleSize::Int, channels:
         channels,
     )
 end
-function WaveCopy(wave::Wave)
-    return ccall((:WaveCopy, raylib_lib_path), Wave, (Wave,), wave)
-end
-function WaveCrop(wave::Ptr{Wave}, initSample::Int, finalSample::Int)
-    ccall(
-        (:WaveCrop, raylib_lib_path),
-        Cvoid,
-        (Ptr{Wave}, Cint, Cint),
-        wave,
-        initSample,
-        finalSample,
-    )
-end
 function LoadWaveSamples(wave::Wave)
     return ccall((:LoadWaveSamples, raylib_lib_path), Ptr{Cfloat}, (Wave,), wave)
 end
-function UnloadWaveSamples(samples::Ptr{Cfloat})
+function UnloadWaveSamples(samples::Ptr{Float64})
     ccall((:UnloadWaveSamples, raylib_lib_path), Cvoid, (Ptr{Cfloat},), samples)
 end
 function LoadMusicStream(fileName::String)
-    return ccall((:LoadMusicStream, raylib_lib_path), Music, (Cstring,), fileName)
+    return ccall((:LoadMusicStream, raylib_lib_path), Music, (Ptr{Cchar},), fileName)
 end
-function LoadMusicStreamFromMemory(fileType::String, data::Ptr{Cuchar}, dataSize::Int)
+function LoadMusicStreamFromMemory(fileType::String, data::Ptr{Cuchar}, dataSize::Int64)
     return ccall(
         (:LoadMusicStreamFromMemory, raylib_lib_path),
         Music,
-        (Cstring, Ptr{Cuchar}, Cint),
+        (Ptr{Cchar}, Ptr{Cuchar}, Cint),
         fileType,
         data,
         dataSize,
@@ -3959,6 +4200,9 @@ end
 function SetMusicPitch(music::Music, pitch::Float64)
     ccall((:SetMusicPitch, raylib_lib_path), Cvoid, (Music, Cfloat), music, pitch)
 end
+function SetMusicPan(music::Music, pan::Float64)
+    ccall((:SetMusicPan, raylib_lib_path), Cvoid, (Music, Cfloat), music, pan)
+end
 function GetMusicTimeLength(music::Music)
     return ccall((:GetMusicTimeLength, raylib_lib_path), Cfloat, (Music,), music)
 end
@@ -3978,7 +4222,7 @@ end
 function UnloadAudioStream(stream::AudioStream)
     ccall((:UnloadAudioStream, raylib_lib_path), Cvoid, (AudioStream,), stream)
 end
-function UpdateAudioStream(stream::AudioStream, data::Ptr{Cvoid}, frameCount::Int)
+function UpdateAudioStream(stream::AudioStream, data::Ptr{Cvoid}, frameCount::Int64)
     ccall(
         (:UpdateAudioStream, raylib_lib_path),
         Cvoid,
@@ -4024,6 +4268,37 @@ function SetAudioStreamPitch(stream::AudioStream, pitch::Float64)
         pitch,
     )
 end
-function SetAudioStreamBufferSizeDefault(size::Int)
+function SetAudioStreamPan(stream::AudioStream, pan::Float64)
+    ccall((:SetAudioStreamPan, raylib_lib_path), Cvoid, (AudioStream, Cfloat), stream, pan)
+end
+function SetAudioStreamBufferSizeDefault(size::Int64)
     ccall((:SetAudioStreamBufferSizeDefault, raylib_lib_path), Cvoid, (Cint,), size)
 end
+function SetAudioStreamCallback(stream::AudioStream, callback::Ptr{Cvoid})
+    ccall(
+        (:SetAudioStreamCallback, raylib_lib_path),
+        Cvoid,
+        (AudioStream, Ptr{Cvoid}),
+        stream,
+        callback,
+    )
+end
+function AttachAudioStreamProcessor(stream::AudioStream, processor::Ptr{Cvoid})
+    ccall(
+        (:AttachAudioStreamProcessor, raylib_lib_path),
+        Cvoid,
+        (AudioStream, Ptr{Cvoid}),
+        stream,
+        processor,
+    )
+end
+function DetachAudioStreamProcessor(stream::AudioStream, processor::Ptr{Cvoid})
+    ccall(
+        (:DetachAudioStreamProcessor, raylib_lib_path),
+        Cvoid,
+        (AudioStream, Ptr{Cvoid}),
+        stream,
+        processor,
+    )
+end
+# end functions
