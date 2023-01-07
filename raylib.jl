@@ -1,15 +1,6 @@
-const directory_location = @__DIR__
+using Raylib_jll
 
-## RAYLIB CONSTANTS
-## EDIT THIS PATH
-if isfile(directory_location * "/raylib.dll")
-    const raylib_lib_path = directory_location * "/raylib.dll"
-elseif isfile(directory_location * "/raylib.dylib")
-    const raylib_lib_path = directory_location * "/libraylib.dylib"
-else
-    const raylib_lib_path = directory_location * "/libraylib.so"
-end
-##
+const raylib_lib_path = libraylib
 
 # start enums
 # ConfigFlags
