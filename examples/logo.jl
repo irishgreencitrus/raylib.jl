@@ -14,3 +14,4 @@ while !WindowShouldClose()
 		DrawText("raylib.jl",s_w÷2 - 44, s_h÷2+48,40,Color(0,0,0,255))
 	EndDrawing()
 end
+CloseWindow()
